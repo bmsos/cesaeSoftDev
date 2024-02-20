@@ -12,11 +12,24 @@ public class exercicio10 {
         n1 = input.nextDouble();
         System.out.print("Indique o segundo número: ");
         n2 = input.nextDouble();
-        System.out.print("Indique a operação pretendida: ");
+
+        // input.nextLine() is necessary before the usage of another input.nextLine string reader
+        // consumes de newline character left in the input buffer after the nextInt() method
+        // if the nextLine() is called in first place, it's not necessary to call the nextLine before
+        input.nextLine();
+        System.out.print("Indique a operação matemática pretendida: ");
         operacao = input.nextLine();
 
-        System.out.print(operacao);
 
+        switch (operacao) {
+            case "+" -> System.out.print("Resultado: " + n1 + n2);
+            case "-" -> System.out.print("Resultado: " + (n1 - n2));
+            case "*" -> System.out.print("Resultado: " + (n1 * n2));
+            case "/" -> System.out.print("Resultado: " + (n1 / n2));
+            default -> System.out.print("Por favr indique a operação apenas através dos respetivos sinais (+, -, *, /)");
+        }
+
+        input.close();
 
         // INACABADO
     }
