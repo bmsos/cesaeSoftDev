@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <style>
+        .espacar10 {
+            margin-top: 10px;
+        }
+        .espacar20 {
+            margin-top: 20px;
+        }
+    </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="cesae.ico">
@@ -31,54 +39,50 @@
     </header>
 
     <hr>
-
-    <div style="border: solid 1px black; width: 80%; height: 100%; margin: 40px auto">
-        <p style="font-size: 16px; width: 240px; background: white; margin: -10px 0 0 20px; padding-left: 10px">Formulário de Contacto do CESAE</p>
-        <div style="padding: 30px">
-            <form action="" method="GET">
-                <div>
-                    <label for="name">Nome: </label>
-                    <input id="name" type="text" placeholder="Insira o seu nome aqui" required>
-                </div>
-                <div>
-                    <label for="email">Email: </label>
-                    <input id="email" type="email">
-                </div>
-
-                <!--
-                <div style="margin-top: 20px">
-                    <p style="margin-bottom: 5px;">Curso: </p>
-                    <div>
-                        <input id="webDeveloper_mobile" type="radio" name="webDeveloper_mobile" value="webDeveloper_mobile" checked>
-                        <label for="webDeveloper_mobile">Web Developer & Mobile</label>
-                    </div>
-                    <div>
-                        <input id="outra" type="radio" name="outra" value="outra">
-                        <label for="outra">Outra</label>
-                    </div>                 
-                </div>
-                -->
-
-                <div style="margin-top: 20px">
-                    <p style="margin-bottom: 5px;">Curso: </p>
-                    <select name="curso" id="curso">
-                        <option value="webDeveloper_mobile">Web Developer & Mobile</option>
-                        <option value="outra">Outra</option>
-                    </select>             
-                </div>
-
-                <div style="margin-top: 20px">
-                    <label for="mensagem">Mensagem:</label>
-                    <textarea id="mensagem" cols="30" rows="7"></textarea>
-                </div>
-                <div style="margin-top: 20px">
-                    <input type="reset" value="Limpar">
-                    <input type="submit" value="Enviar">
-                </div>
-                
-            </form>
-        </div>
-    </div>
+    <form action="" method="GET" style="width: 80%; margin: 30px 10%;">
+        <fieldset>
+            <legend>Formulário CESAE</legend>
+            <div>
+                <label for="name">Nome: </label>
+                <input id="name" type="text" placeholder="Insira o seu nome aqui" required>
+            </div>
+            <div class="espacar10">
+                <label for="email">Email: </label>
+                <input id="email" type="email">
+            </div>
+            <div class="espacar10">
+                <label for="date">Data: </label>
+                <input id="date" type="date">
+            </div>
+            <div class="espacar10">
+                <label for="number">Número: </label>
+                <input id="number" type="number" min="10" max="15">
+            </div>
+            <div class="espacar20">
+                <label for="file">Ficheiro: </label>
+                <input id="file" type="file">
+            </div>
+    
+            <div class="espacar20">
+                <p style="margin-bottom: 5px;">Curso: </p>
+                <select name="curso" id="curso">
+                    <option value="webDeveloper_mobile">Web Developer & Mobile</option>
+                    <option value="outra">Outra</option>
+                </select>             
+            </div>
+    
+            <div class="espacar20">
+                <label for="mensagem">Mensagem:</label>
+                <textarea id="mensagem" cols="30" rows="7"></textarea>
+            </div>
+            <div class="espacar20">
+                <input type="reset" value="Limpar">
+                <input type="submit" value="Enviar">
+            </div>
+        </fieldset>
+        
+        
+    </form>
 
     <hr>
 
