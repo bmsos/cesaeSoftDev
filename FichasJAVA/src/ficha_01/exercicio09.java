@@ -25,7 +25,7 @@ public class exercicio09 {
         totalLiquido = valorLiquidoVencimento + totalSubsidioAlimentacao;
 
         System.out.println("Código do Funcionário: " + codigoFunc);
-        System.out.println("Valor líquido fruto do vencimento: " + valorLiquidoVencimento);
+        System.out.println("Valor ilíquido fruto do vencimento: " + vencimentoBruto);
         System.out.println("Total subsídio alimentação: " + totalSubsidioAlimentacao);
         System.out.println("Retenção IRS a entregar ao Estado: " + valorEntregaIRS);
         System.out.println("Valor a entregar à Segurança Social: " + totalSegSocial);
