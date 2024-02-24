@@ -3,31 +3,30 @@ import java.util.Scanner;
 public class desafio_extra {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
-        int n, numeroASomar, i=1;
+        int n, i;
 
         System.out.print("Indique um numero: ");
         n = input.nextInt();
 
-        numeroASomar = n;
+        i = n-2;
+        int soma = n;
+        int valorASomar = n;
 
-        // 1º while - qtd de numeros abaixo de n até 2
-        while (i <= (n-2)) {
+        // 1º while - qtd de multiplicacoes
+        while (i >= 1) {
             int j = 1;
 
-            while (j < (n-i)) {
-                System.out.println("j: " + j);
-                System.out.println("n-i: " + (n-i));
-                System.out.println("numero a somar: "+ numeroASomar);
-                numeroASomar += numeroASomar;
-                System.out.println("numero a somar: "+ numeroASomar);
-                j += 1;
+            // 2º while - Qtd de somas a efetuar (que substituem cada multiplicacao)
+            while (j <= i) {
+                soma += valorASomar;
+                j++;
             }
 
-
-
-            System.out.println("-----------------------------------");
-            i += 1;
+            valorASomar = soma;
+            i--;
         }
+
+        System.out.print("Fatorial de " + n + " = " + soma);
     }
 }
 
