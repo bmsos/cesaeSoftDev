@@ -9,8 +9,8 @@ public class desafio_extra {
         n = input.nextInt();
 
         i = n-2;
-        int soma = n;
-        int valorASomar = n;
+        long soma = n;
+        long valorASomar = n;
 
         // 1º while - qtd de multiplicacoes
         while (i >= 1) {
