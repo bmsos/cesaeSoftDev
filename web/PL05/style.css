@@ -1,0 +1,146 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* RESETING DEFAULT CSS FORMATS */
+p {
+    display: block;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+h1 {
+    display: block;
+    font-size: 2em;
+    margin-top: 0.67em;
+    margin-bottom: 0.67em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+}
+
+h3 {
+    display: block;
+    font-size: 1.17em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+}
+
+ul {
+    display: block;
+    list-style-type: disc;
+    margin-top: 1em;
+    margin-bottom: 1 em;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 40px;
+}
+
+ol {
+    display: block;
+    list-style-type: decimal;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 40px;
+    }
+
+
+li {
+    display: list-item;
+}
+
+/* /RESETING CSS FORMATS */
+
+body {
+    background-color: #ffe4c4;
+}
+
+
+.logo_img {
+    width: 50%;
+}
+
+.social i {
+    color: #333;
+    font-size: 30px;
+    margin-bottom: 40px;
+    letter-spacing: 30px;
+}
+
+nav i {
+    font-size: 30px;
+    color:#ddd;
+    /* border: solid 1px red; */
+}
+
+nav {
+    margin: 0;
+    background: linear-gradient(90deg, rgba(0,157,226,1) 0%, rgba(200,2,120,1) 50%, rgba(55,32,99,1) 100%);
+    padding: 15px 0 !important;
+    padding: 5px;
+    margin-top: 10px;
+    
+}
+
+nav a {
+    /* border: solid 1px green; */
+    text-decoration: none;
+    text-transform: uppercase;
+    color: white;
+    font-weight: 600; 
+    font-family: Georgia, serif;
+    font-size: 20px;
+}
+
+.navbar {
+    margin: 0 80px;
+    display:flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+header {
+    background-color: #ffe4c4;
+    position: fixed;
+    top:0;
+    text-align: center;
+}
+
+footer {
+    background: grey;
+    text-align: center;
+    padding: 5px;
+    margin-top: 10px;
+}
+
+#author {
+    margin-left: 15px;
+    color: #ddd;
+    letter-spacing: 5px;
+    word-spacing: 7px;
+    text-shadow: 2px 2px 2px black;
+}
+
+main {
+    margin: 0 50px;
+    color: #444;
+    line-height: 1.6;
+    text-align: justify;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', Verdana, sans-serif;
+}
+
+#sobre p {
+    text-indent: 30px;
+}
+
+.espacador {
+    height: 320px;
+}
