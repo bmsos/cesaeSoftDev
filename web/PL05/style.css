@@ -63,9 +63,12 @@ body {
     background-color: #ffe4c4;
 }
 
+.navbar-brand {
+    height: 150px;
+}
 
 .logo_img {
-    width: 50%;
+    width: 20%;
 }
 
 .social i {
@@ -78,33 +81,31 @@ body {
 nav i {
     font-size: 30px;
     color:#ddd;
-    /* border: solid 1px red; */
 }
 
 nav {
-    margin: 0;
     background: linear-gradient(90deg, rgba(0,157,226,1) 0%, rgba(200,2,120,1) 50%, rgba(55,32,99,1) 100%);
-    padding: 15px 0 !important;
-    padding: 5px;
-    margin-top: 10px;
-    
+    padding: 0 80px;
+    height: 70px;
+    display:flex;
+    align-items: center;
+    justify-content: space-around;
+    box-shadow: 2px 2px 5px black;
 }
 
 nav a {
-    /* border: solid 1px green; */
     text-decoration: none;
     text-transform: uppercase;
     color: white;
     font-weight: 600; 
     font-family: Georgia, serif;
     font-size: 20px;
+    display: flex;
+    align-items: center;
 }
 
-.navbar {
-    margin: 0 80px;
-    display:flex;
-    align-items: center;
-    justify-content: space-around;
+nav a i {
+    margin-right: 20px;
 }
 
 header {
@@ -117,8 +118,14 @@ header {
 footer {
     background: grey;
     text-align: center;
-    padding: 5px;
-    margin-top: 10px;
+    height: 80px;
+    margin-top: 30px;
+}
+
+footer p {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 #author {
@@ -142,5 +149,5 @@ main {
 }
 
 .espacador {
-    height: 320px;
+    height: 250px;
 }
