@@ -3,13 +3,14 @@
     padding: 0;
 }
 
-/* RESETING DEFAULT CSS FORMATS */
 p {
     margin: 1em 0;
 }
 
 h1 {
     margin: 0.67em 0;
+    text-align: left;
+    font-family: "Anta", sans-serif;
 }
 
 h3 {
@@ -20,7 +21,6 @@ ul, ol {
     margin: 1em 0;
     padding-left: 40px;
 }
-/* /RESETING CSS FORMATS */
 
 body {
     background-color: #ffe4c4;
@@ -31,7 +31,7 @@ body {
 }
 
 .logo_img {
-    width: 20%;
+    height: 80px;
 }
 
 .social i {
@@ -72,6 +72,7 @@ nav a i {
 }
 
 header {
+    width: 100%;
     background-color: #ffe4c4;
     position: fixed;
     top:0;
