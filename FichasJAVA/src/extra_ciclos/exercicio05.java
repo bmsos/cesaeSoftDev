@@ -32,49 +32,34 @@ public class exercicio05 {
         }
 
         System.out.print("\n---------------------------\n");
+        
 
-
-        // 5.3
-//        int linhas = 5;
-//        reps= 0;
-//        for (int i = linhas; i >=1; i--) {
-//
-//            int j = 1;
-//            while (j<i) {
-//                System.out.print(" ");
-//                j++;
-//            }
-//
-//            int numToSum = 0;
-//            for (int k = 1; k <= reps; k++) {
-//                System.out.print(1 + ());
-//                numToSum--;
-//            }
-//            reps++;
-//
-//            System.out.print(1);
-//
-//            System.out.println();
-//        }
-
+        // 5.3 - ALT 3
         int linhas = 5;
-        reps= linhas;
+        reps= 1;
+
         for (int i = linhas; i >=1; i--) {
 
             for (int j =1; j<i; j++) {
                 System.out.print(" ");
             }
 
-            int numToSubtract = 4 ;
-            for (int k = linhas; k > reps; k--) {
-                System.out.print(1 + (i-2));
-                numToSubtract--;
+            int incremento = 0;
+            for (int k = 1; k < reps; k++) {
+                System.out.print(reps - incremento);
+                incremento++;
             }
-            reps--;
 
             System.out.print(1);
 
+            incremento = 0;
+            for (int f = 1; f < reps; f++) {
+                System.out.print(2 + incremento);
+                incremento++;
+            }
+
             System.out.println();
+            reps++;
         }
     }
 }
