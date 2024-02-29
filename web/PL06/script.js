@@ -149,4 +149,81 @@
 // }
 
 // exercicio 14
-let n = prompt("Indqiue um número")
+// let n = prompt("Indique um número")
+
+// if (n == 1) {
+//     console.log("Um")
+// } else if (n == 2) {
+//     console.log("Dois")
+// } else if (n == 3) {
+//     console.log("Três")
+// } else if (n == 4) {
+//     console.log("Quatro")
+// } else if (n == 5) {
+//     console.log("Cinco")
+// } else {
+//     console.log("Outro valor")
+// }
+
+
+// exercicio15
+// let n = parseInt(prompt("Indique um número: "));
+
+// switch (n) {
+//     case 1:
+//         console.log("Um")
+//         break
+//     case 2:
+//         console.log("Dois")
+//         break
+//     case 3:
+//         console.log("Três")
+//         break
+//     case 4:
+//         console.log("Quatro")
+//         break
+//     case 5:
+//         console.log("Cinco")
+//         break
+//     default:
+//         console.log("Outro valor")
+// }
+
+// exercicio16
+// let l = Array()
+// for (i=1; i<=1000; i++) {
+//     l.push(i)
+// }
+// console.log(l)
+// //document.write(l)
+
+// exercicio17
+// let l = Array(), i=1
+// while (i<=1000) {
+//     l.push(i)
+
+//     // a cada 20 nums, break line
+
+//     if (i % 20 == 0) {
+//         l.push("\n")
+//     }
+
+//     i++
+// }
+// document.write(l)
+
+// exercicio18
+let n1 = prompt("Indique o 1º número: "), 
+n2 = prompt("Indique o 2º número: ")
+
+if (n1 % n2 == 0 && n2 % n1 == 0) {
+    console.log("Um é múltiplo do outro")
+} else if (n1 % n2 == 0 && n2 % n1 != 0) {
+    console.log(`${n1} é múltiplo de ${n2}`)
+} else if (n1 % n2 != 0 && n2 % n1 == 0) {
+    console.log(`${n2} é múltiplo de ${n1}`)
+} else {
+    console.log("Nenhum número é multiplo do outro")
+}
+
+
