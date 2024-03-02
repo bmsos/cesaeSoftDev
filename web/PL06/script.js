@@ -212,18 +212,49 @@
 // }
 // document.write(l)
 
-// exercicio18
-let n1 = prompt("Indique o 1º número: "), 
-n2 = prompt("Indique o 2º número: ")
+// exercicio 18
+// let n1 = prompt("Indique o 1º número: "), 
+// n2 = prompt("Indique o 2º número: ")
 
-if (n1 % n2 == 0 && n2 % n1 == 0) {
-    console.log("Um é múltiplo do outro")
-} else if (n1 % n2 == 0 && n2 % n1 != 0) {
-    console.log(`${n1} é múltiplo de ${n2}`)
-} else if (n1 % n2 != 0 && n2 % n1 == 0) {
-    console.log(`${n2} é múltiplo de ${n1}`)
+// if (n1 % n2 == 0 && n2 % n1 == 0) {
+//     console.log("Um é múltiplo do outro")
+// } else if (n1 % n2 == 0 && n2 % n1 != 0) {
+//     console.log(`${n1} é múltiplo de ${n2}`)
+// } else if (n1 % n2 != 0 && n2 % n1 == 0) {
+//     console.log(`${n2} é múltiplo de ${n1}`)
+// } else {
+//     console.log("Nenhum número é multiplo do outro")
+// }
+
+// exercicio 19
+// let n = prompt("Numero: ")
+// if (n % 2 == 0) {
+//     document.write("Par")
+// } else {
+//     document.write("Impar")
+// }
+
+// exercicio 20
+let n = prompt("Numero: ")
+if (n > 99 && n < 1000) {
+    let resto, resultado=0
+    for (i=0; i<3; i++) {
+        resto = n % 10
+        n = (n - resto) / 10 
+        console.log(`${resto}  `)
+    }
 } else {
-    console.log("Nenhum número é multiplo do outro")
+    document.write("Não tem 3 digitos")
 }
 
+// exercicio 21
 
+// exercicio 22
+
+// exercicio 23
+
+// exercicio 24
+
+// exercicio 25
+
+// exercicio 26
