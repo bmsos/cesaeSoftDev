@@ -2,6 +2,9 @@ package ficha02;
 import java.util.Scanner;
 
 public class exercicio13 {
+
+    //  Faça um programa que leia um horário no sistema de 24 horas e imprima esse horário no sistema de 12 horas.
+
     public static void main(String[] args) {
 
         Scanner input = new Scanner(System.in);

@@ -3,6 +3,9 @@ package ficha02;
 import java.util.Scanner;
 
 public class exercicio09 {
+
+    //  Crie um programa que mostre o menor de três números inteiros lidos.
+
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         int n1, n2, n3;

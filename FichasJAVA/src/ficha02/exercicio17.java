@@ -1,6 +1,11 @@
 package ficha02;
 import java.util.Scanner;
 public class exercicio17 {
+
+    //  Um banco autoriza a conceção de um crédito especial aos seus clientes, num montante variável com base no seu
+    //  saldo médio do último ano. Faça um programa que leia o saldo médio de um cliente e calcule o valor do crédito
+    //  especial de acordo com a seguinte tabela. Mostre uma mensagem com o saldo médio e o valor de crédito
+
     public static void main(String[] args) {
 
         Scanner input = new Scanner(System.in);

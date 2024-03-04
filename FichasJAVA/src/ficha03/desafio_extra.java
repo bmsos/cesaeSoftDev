@@ -1,6 +1,9 @@
 package ficha03;
 import java.util.Scanner;
 public class desafio_extra {
+
+    //  Refazer o exercício 15 com a proibição de usar o operador da multiplicação *
+
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         int n, i;

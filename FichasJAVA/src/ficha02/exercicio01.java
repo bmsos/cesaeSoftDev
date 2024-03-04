@@ -1,6 +1,9 @@
 package ficha02;
 import java.util.Scanner;
 public class exercicio01 {
+
+    //  Leia dois números inteiros e escreva na consola o maior deles
+
     public static void main(String[] args) {
 
         Scanner input = new Scanner(System.in);

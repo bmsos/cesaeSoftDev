@@ -3,6 +3,10 @@ package ficha02;
 import java.util.Scanner;
 
 public class exercicio15 {
+
+    //  Escreva um programa que leia 3 números, seguidamente deve perguntar ao utilizador se quer ordem crescente
+    //  ‘C’ ou decrescente ‘D’, e deve colocar os números no ecrã por ordem decrescente ou crescente de acordo com a escolha.
+
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
 

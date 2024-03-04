@@ -1,6 +1,11 @@
 package ficha03;
 import java.util.Scanner;
 public class exercicio12 {
+
+    //  Escreva um algoritmo que leia uma quantidade desconhecida de números inteiros positivos fornecidos pelo
+    //  utilizador e conte quantos deles estão nos seguintes intervalos: [0.25], [26,50], [51,75] e [76,100].
+    //  A entrada de dados deve terminar quando for lido um número negativo.
+
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         int n, soma25=0, soma50=0, soma75=0, soma100=0;
@@ -11,7 +16,7 @@ public class exercicio12 {
 
             if (n < 0) {break;}
 
-            if (n >= 0 && n <= 25) {
+            if (n <= 25) {
                 soma25 += 1;
             }
 

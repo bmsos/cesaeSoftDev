@@ -2,6 +2,9 @@ package ficha02;
 import java.util.Scanner;
 
 public class exercicio14 {
+
+    //  Escreva um programa que leia 3 números, seguidamente deve colocar os números no ecrã por ordem crescente.
+
     public static void main(String[] args) {
 
         Scanner input = new Scanner(System.in);

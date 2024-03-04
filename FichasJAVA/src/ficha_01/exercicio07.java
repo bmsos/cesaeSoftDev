@@ -1,6 +1,10 @@
 package ficha_01;
 import java.util.Scanner;
 public class exercicio07 {
+
+    //  Escreva um programa que requisite ao utilizador o preço de 3 produtos adquiridos.
+    //  Apresente o valor a pagar, considerando que deverá ter um desconto de 10% sobre o total dos produtos.
+
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
 

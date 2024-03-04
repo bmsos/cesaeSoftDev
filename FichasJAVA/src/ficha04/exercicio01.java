@@ -2,6 +2,11 @@ package ficha04;
 import java.util.Objects;
 import java.util.Scanner;
 public class exercicio01 {
+
+    //  Implemente um programa que peça ao utilizador dois valores e um carácter representando uma das quatro
+    //  operações aritméticas (+, -, *, /). Apresente o resultado de aplicar a operação correspondente aos valores. No
+    //  final, deverá perguntar ao utilizador se deseja repetir, permitindo-lhe efetuar novos cálculos.
+
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
 

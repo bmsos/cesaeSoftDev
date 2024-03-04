@@ -1,6 +1,9 @@
 package ficha02;
 import java.util.Scanner;
 public class exercicio05 {
+
+    //  Escreva um programa que leia dois valores numéricos e apresente o menor e depois o maior.
+
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         double n1, n2;

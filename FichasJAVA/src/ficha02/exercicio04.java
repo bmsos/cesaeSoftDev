@@ -3,6 +3,18 @@ package ficha02;
 import java.util.Scanner;
 
 public class exercicio04 {
+
+    //  Na fórmula 1, os pontos no final de cada corrida são atribuidos da seguinte forma:
+    //  a. 1º Lugar: 10 pontos
+    //  b. 2º Lugar: 8 pontos
+    //  c. 3º Lugar: 6 pontos
+    //  d. 4º Lugar: 5 pontos
+    //  e. 5º Lugar: 4 pontos
+    //  f. 6º Lugar: 3 pontos
+    //  g. 7º Lugar: 2 pontos
+    //  h. 8º Lugar: 1 ponto
+    //  Escreva um programa que leia o lugar em que o piloto terminou e escreva quantos pontos ganhou.
+
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         int lugar, pontos;
