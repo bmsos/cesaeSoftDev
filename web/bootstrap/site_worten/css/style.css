@@ -4,6 +4,7 @@
     --preto: #000;
     --cinza: #aaa;
     --cinzaDark: #333;
+    --amarelo: rgb(186, 197, 31);
 }
 
 body {
@@ -19,6 +20,11 @@ body {
 .btn:hover {
     background-color: var(--branco);
     color: var(--vermelho);
+    border: solid 1px var(--vermelho);
+}
+
+.badge {
+    background-color: var(--vermelho);
 }
 
 header {
@@ -40,6 +46,14 @@ nav input::placeholder {
 
 main p{
     text-align: justify;
+}
+
+.card-title {
+    min-height: 75px;
+}
+
+#gmaps {
+    height: 400px;
 }
 
 footer {
