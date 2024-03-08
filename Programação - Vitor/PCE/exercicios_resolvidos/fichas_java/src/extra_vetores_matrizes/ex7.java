@@ -6,16 +6,6 @@ public class ex7 {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
 
-//        System.out.print("Tamanho do array: ");
-//        int size = input.nextInt();
-//
-//        int [] lista = new int[size];
-//
-//        for (int i = 0; i <lista.length; i++) {
-//            System.out.print("Número: ");
-//            lista[i] = input.nextInt();
-//        }
-
         int[] lista = {1, 3, 5, 1, 2, 1},
         semN = new int[lista.length];
 

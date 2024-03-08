@@ -2,11 +2,11 @@ package extra_vetores_matrizes;
 
 public class ex15 {
     public static void main(String[] args) {
-        int linhas = 3, colunas = 3;
+        int linhas = 3, colunas = 2;
         int[][] m1 = {
-                {1, 2, 3},
-                {4, 5, 6},
-                {7, 8, 9}
+                {1, 2},
+                {4, 5},
+                {7, 8}
         };
 
         double soma = 0, count = linhas * colunas;
