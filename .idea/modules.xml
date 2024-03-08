@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Programação - Vitor/ALG/exercicios_resolvidos/FichasJAVA/FichasJAVA.iml" filepath="$PROJECT_DIR$/Programação - Vitor/ALG/exercicios_resolvidos/FichasJAVA/FichasJAVA.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Programação - Vitor/ALG/exercicios_resolvidos/Fichas_Java_formador/Fichas_Java_formador.iml" filepath="$PROJECT_DIR$/Programação - Vitor/ALG/exercicios_resolvidos/Fichas_Java_formador/Fichas_Java_formador.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Programação - Vitor/PCE/PCE.iml" filepath="$PROJECT_DIR$/Programação - Vitor/PCE/PCE.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/cesaeSoftDev.iml" filepath="$PROJECT_DIR$/.idea/cesaeSoftDev.iml" />
+    </modules>
+  </component>
+</project>

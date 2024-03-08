@@ -31,8 +31,15 @@ public class ex7 {
             }
         }
 
+        int[] semNLimpo = new int[count];
+
         for (int i=0; i< count; i++) {
-            System.out.print(semN[i] + ", ");
+            semNLimpo[i] = semN[i];
         }
+
+        for (int i=0; i< semNLimpo.length; i++) {
+            System.out.print(semNLimpo[i] + " | ");
+        }
+
     }
 }

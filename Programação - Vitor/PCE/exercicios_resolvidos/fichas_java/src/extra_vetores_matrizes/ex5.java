@@ -10,7 +10,6 @@ public class ex5 {
         int[] duplicados = new int[12];
 
         int count = 0;
-        boolean zeroRepete=false;
 
         for (int i=0; i<12; i++) {
             for (int j=i+1; j<12; j++) {
