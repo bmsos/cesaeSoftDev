@@ -1,18 +1,11 @@
 package extraFuncoes;
+
 import java.util.Scanner;
-public class ex1 {
-    static int numMaisPequeno (int n1, int n2, int n3) {
-        int menor = n1;
+public class ex2 {
+    static double media (int n1, int n2, int n3) {
+        double soma = n1 + n2 + n3;
 
-        if (n2 < menor) {
-            menor = n2;
-        }
-
-        if (n3 < menor) {
-            menor = n3;
-        }
-
-        return menor;
+        return soma / 3.0;
     }
 
     public static void main(String[] args) {
@@ -24,6 +17,6 @@ public class ex1 {
         System.out.print("Número 3: ");
         int n3 = input.nextInt();
 
-        System.out.print(numMaisPequeno(n1, n2, n3));
+        System.out.print(media(n1, n2, n3));
     }
 }
