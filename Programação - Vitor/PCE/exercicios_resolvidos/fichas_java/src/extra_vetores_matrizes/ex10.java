@@ -1,5 +1,4 @@
 package extra_vetores_matrizes;
-
 public class ex10 {
     public static void main(String[] args) {
         int[] lista = {1, 2, 3, 4, 5, 2, 6, 2, 6, 6, 2, 0};
@@ -43,11 +42,9 @@ public class ex10 {
             }
         }
         int[] naoRepetidosLimpo = new int[countNaoRepetidos];
-
         for (int i=0; i<countNaoRepetidos; i++) {
             naoRepetidosLimpo[i] = naoRepetidos[i];
         }
-
         for (int i=0; i<naoRepetidosLimpo.length; i++) {
             System.out.print(naoRepetidosLimpo[i] + " | ");
         }
