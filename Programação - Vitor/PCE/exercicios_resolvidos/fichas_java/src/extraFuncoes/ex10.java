@@ -48,11 +48,13 @@ public class ex10 {
         Scanner input = new Scanner(System.in);
 
         double area = calcularArea();
+        System.out.println("Área: " + area + " m2");
 
         System.out.print("Preço do terreno: ");
         double preco = input.nextDouble();
 
         double valorMetroQuadrado = preco / area;
+        System.out.println("Preço por m2: " + valorMetroQuadrado);
 
         System.out.print("""
                 Tipologia:
@@ -62,31 +64,48 @@ public class ex10 {
                 """);
         int tipologia = input.nextInt();
 
+        boolean abaixo = false, acima = false;
+        double diferenca = 0;
+
         switch (tipologia) {
             case 1 -> {
-                if (valorMetroQuadrado >= 450 && valorMetroQuadrado <= 750) {
-                    System.out.println("O preço está dentro do valor de mercado");
-                } else {
-                    System.out.println("O preço está fora do valor de mercado");
+                if (valorMetroQuadrado < 450) {
+                    abaixo = true;
+                    diferenca = 450 - valorMetroQuadrado;
+                } else if (valorMetroQuadrado > 750) {
+                    acima = true;
+                    diferenca = valorMetroQuadrado - 750;
                 }
             }
             case 2 -> {
-                if (valorMetroQuadrado >= 150 && valorMetroQuadrado <= 500) {
-                    System.out.println("O preço está dentro do valor de mercado");
-                } else {
-                    System.out.println("O preço está fora do valor de mercado");
+                if (valorMetroQuadrado < 150) {
+                    abaixo = true;
+                    diferenca = 150 - valorMetroQuadrado;
+                } else if (valorMetroQuadrado > 500) {
+                    acima = true;
+                    diferenca = valorMetroQuadrado - 500;
                 }
             }
             case 3 -> {
-                if (valorMetroQuadrado >= 30 && valorMetroQuadrado <= 60) {
-                    System.out.println("O preço está dentro do valor de mercado");
-                } else {
-                    System.out.println("O preço está fora do valor de mercado");
+                if (valorMetroQuadrado < 30) {
+                    abaixo = true;
+                    diferenca = 30 - valorMetroQuadrado;
+                } else if (valorMetroQuadrado > 60) {
+                    acima = true;
+                    diferenca = valorMetroQuadrado - 60;
                 }
             }
             default -> {
                 System.out.println("Opção inválida");
             }
+        }
+
+        if (abaixo) {
+            System.out.printf("O valor está %s€ abaixo do valor de mercado%n", diferenca);
+        } else if (acima) {
+            System.out.printf("O valor está %s€ acima do valor de mercado%n", diferenca);
+        } else {
+            System.out.println("O preço está dentro do valor de mercado");
         }
     }
 }
