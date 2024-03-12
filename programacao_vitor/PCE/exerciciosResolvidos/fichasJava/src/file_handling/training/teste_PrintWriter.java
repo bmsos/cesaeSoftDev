@@ -1,4 +1,4 @@
-package file_handling;
+package file_handling.training;
 // 1. Importar File
 import java.io.File;
 // 3. Importar PrintWriter para escrever em ficheiros
