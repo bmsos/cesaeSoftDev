@@ -17,9 +17,9 @@ public class ex1 {
 
         // File 2
         scFile2.nextLine();
-        System.out.println(scFile2.nextLine().equals("\r\n"));
+        System.out.println(scFile2.nextLine().split("\n"));
 //        while(scFile2.hasNextLine()) {
-//            if (!scFile2.nextLine().isEmpty()) {
+//            if (!scFile2.nextLine().equals("\n")) {
 //                System.out.println(scFile2.nextLine());
 //            }
 //        }
