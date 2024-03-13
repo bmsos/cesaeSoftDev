@@ -235,26 +235,92 @@
 // }
 
 // exercicio 20
-let n = prompt("Numero: ")
-if (n > 99 && n < 1000) {
-    let resto, resultado=0
-    for (i=0; i<3; i++) {
-        resto = n % 10
-        n = (n - resto) / 10 
-        console.log(`${resto}  `)
-    }
-} else {
-    document.write("Não tem 3 digitos")
-}
+// let n = prompt("Numero: ")
+// if (n > 99 && n < 1000) {
+//     let resto, resultado=0
+//     for (i=0; i<3; i++) {
+//         resto = n % 10
+//         resultado += resto
+//         if (i != 2) {
+//             resultado *= 10
+//         }
+//         n = (n - resto) / 10
+//     }
+
+//     n = resultado
+//     resultado = ""
+
+//     for (i=0; i<3; i++) {
+//         resto = n % 10
+//         n = (n - resto) / 10 
+//         resultado += `${resto} `
+//     }
+
+//     console.log(resultado)
+// } else {
+//     document.write("Não tem 3 digitos")
+// }
 
 // exercicio 21
+// const n1 = prompt("Numero 1: "), n2 = prompt("Numero 2: "), n3 = prompt("Numero 3: ")
+// let menor = n1
+
+// if (n2 < menor && n2 < n3) {
+//     menor = n2
+// }
+// if (n3 < menor) {
+//     menor = n3
+// }
+// console.log(`Menor: ${menor}`)
 
 // exercicio 22
+// let temperatura = prompt("Graus Celsius: ")
+// console.log(`Graus Fahrenheit: ${temperatura * 1.8 + 32}`)
 
 // exercicio 23
+// const v = prompt("Valor em Euros: ")
+// let conversaoDolar = v * 1.2, conversaoLibra = v * 0.9, conversaoPeso = v * 28.5
+
+// document.write(`Dólares: ${conversaoDolar}<br>`)
+// document.write(`Libras: ${conversaoLibra}<br>`)
+// document.write(`Pesos: ${conversaoPeso}`)
 
 // exercicio 24
+// let n = prompt("Número"),
+// isCapicua = true
+// for (i=1; i<=n.length; i++) {
+//     if (n[i-1] != n[n.length-i]) {
+//         isCapicua = false
+//     }
+// }
+// console.log((isCapicua ? "É capicua" : "Não é capicua"))
 
 // exercicio 25
+// let n = prompt("Número: ")
+
+// if (n > 10) {
+//     for (i=0; i<=n; i++) {
+//         console.log(i)
+//     }
+// } else {
+//     console.log("Número deve ser maior que 10")
+// }
 
 // exercicio 26
+// let inicio = parseInt(prompt("Inicio do intervalo")),
+// fim = parseInt(prompt("Fim do intervalo"))
+
+// for (i=inicio; i<=fim; i++) {
+//     if (i % 2 == 0) {
+//         console.log(i)
+//     }
+// }
+
+// exercicio 27
+let v=1;
+
+while (v % 2 != 0 || v >= 100) {
+    v = prompt("Numero: ")
+}
+
+document.write(v)

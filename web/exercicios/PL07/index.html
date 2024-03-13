@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <button onclick="mudarCor('yellow')" id="fundoAmarelo">Amarelo</button>
+    <button onclick="mudarCor('green')" id="fundoVerde">Verde</button>
+    <button onclick="mudarCor('blue')" id="fundoAzul">Azul</button>
+    <button id="apresentarLorem">Mostrar texto</button>
+    <button style="display:none" id="toggleParteLorem">Esconder parte</button>
+    <div style="height: 200px; overflow:hidden; margin: 10px auto">
+        <p style="display:none; font-size: 16px;" id="textoLorem">Lorem ipsum dolor sit amet consectetur adipisicing elit. <span id="parteLorem">Dicta, repudiandae consequuntur laborum aut modi nam suscipit, unde possimus veniam obcaecati earum nostrum adipisci sed atque ipsa quo culpa vitae explicabo.</span></p>
+    </div>
+    
+    
+    <button style="display:none" id="aumentarTexto">Aumentar texto</button>
+    <button style="display:none" id="diminuirTexto">Diminuir texto</button>
+    <script src="script.js"></script>
+</body>
+</html>
