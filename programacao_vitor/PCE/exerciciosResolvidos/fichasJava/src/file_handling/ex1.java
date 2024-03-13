@@ -13,21 +13,20 @@ public class ex1 {
 
         // File 1
         System.out.println(scFile1.nextLine());
-        System.out.println();
+        System.out.println("\n-------------------------------------------\n");
 
         // File 2
-        scFile2.nextLine();
-        System.out.println(scFile2.nextLine().equals("\r\n"));
-//        while(scFile2.hasNextLine()) {
-//            if (!scFile2.nextLine().isEmpty()) {
-//                System.out.println(scFile2.nextLine());
-//            }
-//        }
-//        System.out.println();
-//
-//        // File 3
-//        while(scFile3.hasNextLine()) {
-//            System.out.println(scFile3.nextLine());
-//        }
+        while(scFile2.hasNextLine()) {
+            String linha = scFile2.nextLine();
+            if (!linha.isEmpty()) {
+                System.out.println(linha);
+            }
+        }
+        System.out.println("\n-------------------------------------------\n");
+
+        // File 3
+        while(scFile3.hasNextLine()) {
+            System.out.println(scFile3.nextLine());
+        }
     }
 }
