@@ -5,38 +5,6 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class ex9 {
-    static int converterDuracaoEmSegundos (int minutos, int segundos) {
-        return (minutos * 60) + segundos;
-    }
-    static String[] pesquisaPorGenero (File file, String genero) throws FileNotFoundException {
-        Scanner sc = new Scanner(file);
-        String[] lista = new String[9];
-        return lista;
-    }
-    static String[] pesquisaPorArtista (File file, String artista) throws FileNotFoundException {
-        Scanner sc = new Scanner(file);
-        String[] lista = new String[9];
-        return lista;
-    }
-    static String musicaComMaiorDuracao (File file) throws FileNotFoundException {
-        Scanner sc = new Scanner(file);
-        sc.nextLine();
-
-        int maior = 0;
-        while (sc.hasNextLine()) {
-            String[] linha = sc.nextLine().split(",");
-            int minutos = Integer.parseInt(linha[3].split(":")[0]);
-            int segundos = Integer.parseInt(linha[3].split(":")[1]);
-            int duracao = converterDuracaoEmSegundos(minutos, segundos);
-        }
-
-        return "";
-    }
-    static String[] musicasComDuracaoSuperior (File file, int duracao) throws FileNotFoundException {
-        Scanner sc = new Scanner(file);
-        String[] lista = new String[9];
-        return lista;
-    }
     public static void main(String[] args) throws FileNotFoundException {
         Scanner input = new Scanner(System.in);
         File file = new File("files/exercicio_09.csv");
@@ -59,26 +27,65 @@ public class ex9 {
             switch (opcao) {
                 case 1 -> {
                     System.out.print("Género: ");
+                    input.nextLine();
                     genero = input.nextLine();
-                    pesquisaPorGenero(file, genero);
+                    String[][] lista = Ex9Funcoes.pesquisaPorGeneroOuArtista(file, "genero", genero);
+                    System.out.print("\n--------------------\n");
+                    System.out.println("Resultados da pesquisa: " + lista.length);
+                    for (String[] musica : lista) {
+                        for (String elemento : musica) {
+                            System.out.print(elemento + " | ");
+                        }
+                        System.out.println();
+                    }
+                    System.out.print("\n--------------------\n");
                 }
                 case 2 -> {
                     System.out.print("Artista: ");
+                    input.nextLine();
                     artista = input.nextLine();
-                    pesquisaPorArtista(file, artista);
+                    String[][] lista = Ex9Funcoes.pesquisaPorGeneroOuArtista(file, "artista", artista);
+                    System.out.print("\n--------------------\n");
+                    System.out.println("Resultados da pesquisa: " + lista.length);
+                    for (String[] musica : lista) {
+                        for (String elemento : musica) {
+                            System.out.print(elemento + " | ");
+                        }
+                        System.out.println();
+                    }
+                    System.out.print("\n--------------------\n");
                 }
                 case 3 -> {
-                    musicaComMaiorDuracao(file);
+                    String[] musica = Ex9Funcoes.musicaComMaiorDuracao(file);
+                    System.out.printf("""
+                        %nMúsica com maior duração
+                        Nome: %s
+                        Artista: %s
+                        Género: %s
+                        Duracao: %s
+                        %n ---------------------------- %n
+                        """, musica[0], musica[1], musica[2], musica[3]);
+
                 }
                 case 4 -> {
                     System.out.println("Indique a duração mínima");
                     System.out.print("Minutos: ");
                     int minutos= input.nextInt();
-                    System.out.print("Segundos: ");
+                    System.out.print("Segundos (restantes): ");
                     int segundos = input.nextInt();
-                    int duracao = converterDuracaoEmSegundos(minutos, segundos);
+                    int duracao = Ex9Funcoes.converterDuracaoEmSegundos(minutos, segundos);
 
-                    musicasComDuracaoSuperior(file, duracao);
+                    String[][] lista = Ex9Funcoes.musicasComDuracaoSuperior(file, duracao);
+
+                    System.out.print("\n--------------------\n");
+                    System.out.println("Resultados da pesquisa: " + lista.length);
+                    for (String[] musica : lista) {
+                        for (String elemento : musica) {
+                            System.out.print(elemento + " | ");
+                        }
+                        System.out.println();
+                    }
+                    System.out.print("\n--------------------\n");
                 }
                 case 5 -> repeat = false;
                 default -> System.out.println("Opção Inválida\n");
