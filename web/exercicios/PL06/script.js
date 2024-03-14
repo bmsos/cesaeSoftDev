@@ -317,10 +317,13 @@
 // }
 
 // exercicio 27
-let v=1;
+// let v=1;
+// while (v % 2 != 0 || v >= 100) {
+//     v = prompt("Numero: ")
+// }
 
-while (v % 2 != 0 || v >= 100) {
-    v = prompt("Numero: ")
-}
-
-document.write(v)
+// for (i=0; i<=v; i++) {
+//     if (i % 5 == 0) {
+//         document.write(i + "<br>")
+//     }
+// }
