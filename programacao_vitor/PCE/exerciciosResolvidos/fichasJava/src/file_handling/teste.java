@@ -1,7 +1,13 @@
 package file_handling;
-
+import java.util.*;
+import java.io.*;
 public class teste {
     public static void main(String[] args) {
-        System.out.println(Integer.parseInt("06"));
+
+        String v = "tudo";
+
+        for (String item : v.split("")) {
+            System.out.println(item);
+        }
     }
 }
