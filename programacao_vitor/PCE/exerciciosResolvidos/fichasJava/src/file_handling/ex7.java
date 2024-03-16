@@ -6,7 +6,7 @@ import java.io.FileNotFoundException;
 
 public class ex7 {
     public static void main(String[] args) throws FileNotFoundException {
-        File file = new File("files/exercicio_07.txt");
+        File file = new File("files7/exercicio_07.txt");
         Scanner sc = new Scanner(file);
 
         int numLinhas = 0, numPalavras = 0;

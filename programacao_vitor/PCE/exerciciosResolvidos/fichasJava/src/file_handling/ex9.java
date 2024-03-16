@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class ex9 {
     public static void main(String[] args) throws FileNotFoundException {
         Scanner input = new Scanner(System.in);
-        File file = new File("files/exercicio_09.csv");
+        File file = new File("files7/exercicio_09.csv");
 
         int opcao = 0;
         boolean repeat = true;

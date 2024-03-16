@@ -5,8 +5,8 @@ import java.util.Scanner;
 import java.io.PrintWriter;
 public class ex3 {
     public static void main(String[] args) throws FileNotFoundException {
-        File readFile = new File("files/exercicio_03_Alternativa01.txt");
-        File writeFile = new File("files/ex3_write.txt");
+        File readFile = new File("files7/exercicio_03_Alternativa01.txt");
+        File writeFile = new File("files7/ex3_write.txt");
         Scanner sc = new Scanner(readFile);
         PrintWriter pw = new PrintWriter(writeFile);
 

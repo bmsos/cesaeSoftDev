@@ -4,9 +4,9 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 public class ex1 {
     public static void main(String[] args) throws FileNotFoundException {
-        File f1 = new File("files/exercicio_01.txt");
-        File f2 = new File("files/exercicio_01_Alternativa01.txt");
-        File f3 = new File("files/exercicio_01_Alternativa02.txt");
+        File f1 = new File("files7/exercicio_01.txt");
+        File f2 = new File("files7/exercicio_01_Alternativa01.txt");
+        File f3 = new File("files7/exercicio_01_Alternativa02.txt");
         Scanner sc1 = new Scanner(f1);
         Scanner sc2 = new Scanner(f2);
         Scanner sc3 = new Scanner(f3);

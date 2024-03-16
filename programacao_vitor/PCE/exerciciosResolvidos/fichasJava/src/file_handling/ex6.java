@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class ex6 {
     public static void main(String[] args) throws FileNotFoundException {
 
-        File file = new File("files/exercicio_06.txt");
+        File file = new File("files7/exercicio_06.txt");
         Scanner sc = new Scanner(file);
 
         int maiorIdade=0; String nomeMaisVelho="";

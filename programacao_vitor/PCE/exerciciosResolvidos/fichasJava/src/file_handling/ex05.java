@@ -5,8 +5,8 @@ import java.util.Scanner;
 
 public class ex05 {
     public static void main(String[] args) throws FileNotFoundException {
-        File file31 = new File("files/exercicio_05_31.txt");
-        File file1999 = new File("files/exercicio_05_1999.txt");
+        File file31 = new File("files7/exercicio_05_31.txt");
+        File file1999 = new File("files7/exercicio_05_1999.txt");
 
         Scanner sc31 = new Scanner(file31);
         Scanner sc1999 = new Scanner(file1999);
