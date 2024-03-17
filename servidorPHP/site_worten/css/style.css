@@ -1,0 +1,69 @@
+:root {
+    --vermelho: #E32213;
+    --branco : #fff;
+    --preto: #000;
+    --cinza: #aaa;
+    --cinzaDark: #333;
+    --amarelo: rgb(186, 197, 31);
+}
+
+body {
+    font-family: "Open Sans", sans-serif;
+}
+
+.btn {
+    background-color: var(--vermelho);
+    color: var(--branco);
+    border: solid 1px var(--branco);
+}
+
+.btn:hover {
+    background-color: var(--branco);
+    color: var(--vermelho);
+    border: solid 1px var(--vermelho);
+}
+
+.badge {
+    background-color: var(--vermelho);
+}
+
+header {
+    background-color: var(--vermelho);
+}
+
+header img {
+    width: 200px;
+}
+
+nav input {
+    background: var(--branco) !important;
+    color: var(--preto) !important;
+}
+
+nav input::placeholder {
+    color: var(--cinza) !important;
+}
+
+main p{
+    text-align: justify;
+}
+
+.card-title {
+    min-height: 75px;
+}
+
+#gmaps {
+    height: 400px;
+}
+
+footer {
+    background-color: var(--cinzaDark);
+    color: var(--branco);
+}
+
+footer a {
+    color: var(--branco);
+    border: solid 1px var(--branco);
+    border-radius: 50%;
+    padding: 6px; 
+}
