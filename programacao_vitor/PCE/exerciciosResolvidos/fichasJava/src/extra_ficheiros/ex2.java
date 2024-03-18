@@ -43,7 +43,6 @@ public class ex2 {
             }
             System.out.println("Palavra com mais ocorrencias: " + palavraComMaisOcorrencias);
             System.out.println("Ocorrencias: " + maiorNumOcorrencias);
-
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
