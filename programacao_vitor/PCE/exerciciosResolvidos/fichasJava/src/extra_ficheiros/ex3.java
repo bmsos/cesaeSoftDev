@@ -175,16 +175,74 @@ public class ex3 {
         // 1.3. Adicionar quarto
     static void adicionarQuarto (String numQuarto, String tema, String tipologia) throws IOException {
         File fileTemasHotel = new File("filesExtra/Ex_03 Hotel Temático/quartosHotel.csv");
-
         String novoQuarto = numQuarto + ";" + tema + ";" + tipologia;
 
         FileWriter fw = new FileWriter(fileTemasHotel, true);
         fw.write(novoQuarto + "\n");
         fw.close();
+    }
+        // 1.4. Autenticação
+            // 1.4.1. Registar conta
+    static void registarConta (String username, String password) throws IOException {
+        File fileLoginHotel = new File("filesExtra/Ex_03 Hotel Temático/loginHotel.txt");
+        String linha = username + ";" + password;
+        FileWriter fw = new FileWriter(fileLoginHotel, true);
+        fw.write(linha + "\n");
+        fw.close();
+    }
+            // 1.4.2. Apagar conta
+    static void apagarConta (String usernamePretendido) throws FileNotFoundException {
+        File fileLoginHotel = new File("filesExtra/Ex_03 Hotel Temático/loginHotel.txt");
+        Scanner sc = new Scanner(fileLoginHotel);
+
+        String[] dados = new String[contarLinhas(fileLoginHotel)-1];
+        int index = 0;
+        while (sc.hasNextLine()) {
+            String linha = sc.nextLine(), username = linha.split(";")[0];
+            if (!username.equals(usernamePretendido)) {
+                dados[index] = linha;
+                index++;
+            }
         }
+        PrintWriter pw = new PrintWriter(fileLoginHotel);
+        for (String e : dados) {
+            pw.println(e);
+        }
+        pw.close();
+    }
+        // 1.5. Adicionar produto
+    static void adicionarProduto (String nome, String precoUnitario) throws IOException {
+        File fileProdutosHotel = new File("filesExtra/Ex_03 Hotel Temático/produtosHotel.csv");
+        String id = autoIncrementarId(fileProdutosHotel, "p");
+
+        String novoProduto = id + ";" + nome + ";" + precoUnitario + "\n";
+
+        FileWriter fw = new FileWriter(fileProdutosHotel, true);
+        fw.write(novoProduto);
+        fw.close();
+
+    }
+    // 2. Consultar clientes
+    static String consultarClientes (String tipoConsulta, String valor) throws FileNotFoundException {
+        File fileClientesHotel = new File("filesExtra/Ex_03 Hotel Temático/clientesHotel.csv");
+        Scanner sc = new Scanner(fileClientesHotel);
+        String resultadoPesquisa = "";
+        while (sc.hasNextLine()) {
+            String linha = sc.nextLine();
+            String[] dadosCliente = linha.split(";");
+            String id = dadosCliente[0], telefone = dadosCliente[3], email = dadosCliente[4];
+            if (
+                    tipoConsulta.equals("id") && valor.equals(id) ||
+                    tipoConsulta.equals("telefone") && valor.equals(telefone) ||
+                    tipoConsulta.equals("email") && valor.equals(email)
+            ) {
+                return linha;
+            }
+        }
+        return "";
+    }
 
     public static void main(String[] args) {
-        File fileProdutosHotel = new File("filesExtra/Ex_03 Hotel Temático/produtosHotel.csv");
         File fileReservasHotel = new File("filesExtra/Ex_03 Hotel Temático/reservasHotel.csv");
         File fileServicoQuartoHotel = new File("filesExtra/Ex_03 Hotel Temático/servicoQuartoHotel.csv");
         File fileGaleriaFachadaHotel = new File("filesExtra/Ex_03 Hotel Temático/galeriaFachadaHotel.txt");
@@ -283,38 +341,63 @@ public class ex3 {
                                                 break;
                                             }
                                         }
-
                                         System.out.print("Tema: ");
                                         String tema = input.nextLine();
                                         System.out.print("Tipologia: ");
                                         String tipologia = input.nextLine().toUpperCase();
 
                                         adicionarQuarto(numQuarto, tema, tipologia);
-                                        System.out.println("Quarto adicionado com sucesso.");
+                                        System.out.println("Quarto adicionado com sucesso.\n");
                                     }
+    // 1.4. Autenticação
                                     case 4 -> {
                                         System.out.print("""
                                         \nGerir autenticação:
-                                        1. Adicionar credenciais
-                                        2. Excluir credenciais
+                                        1. Registar conta
+                                        2. Apagar conta
                                         """);
                                         int opcaoGerirAutenticacao = 0;
                                         while (opcaoGerirAutenticacao < 1 || opcaoGerirAutenticacao > 2) {
                                             System.out.print("Opção (1-2): ");
                                             opcaoGerirAutenticacao = input.nextInt();
-
                                             switch (opcaoGerirAutenticacao) {
-                                                case 1 -> {}
-                                                case 2 -> {}
+        // 1.4.1. Registar conta
+                                                case 1 -> {
+                                                    System.out.print("Username: ");
+                                                    input.nextLine();
+                                                    String username = input.nextLine();
+                                                    System.out.print("Password: ");
+                                                    String password = input.nextLine();
+
+                                                    registarConta(username, password);
+                                                    System.out.println("Conta registada com sucesso.\n");
+                                                }
+        // 1.4.2. Apagar conta
+                                                case 2 -> {
+                                                    System.out.print("Username da conta: ");
+                                                    input.nextLine();
+                                                    apagarConta(input.nextLine());
+                                                    System.out.println("Conta eliminada com sucesso\n");
+                                                }
                                                 default -> System.out.println("Opção inválida.");
                                             }
                                         }
                                     }
-                                    case 5 -> {}
+    // 1.5. Adicionar produto
+                                    case 5 -> {
+                                        System.out.print("Nome do produto: ");
+                                        input.nextLine();
+                                        String nome = input.nextLine();
+                                        System.out.print("Preço unitário: ");
+                                        String precoUnitario = input.nextLine();
+                                        adicionarProduto(nome, precoUnitario);
+                                        System.out.println("Produto adicionado com sucesso.\n");
+                                    }
                                     default -> System.out.println("Opção inválida.");
                                 }
                             }
                         }
+// 2. Consultar Clientes
                         case 2 -> {
                             System.out.print("""
                             \nConsultar clientes:
@@ -328,8 +411,25 @@ public class ex3 {
                                 opcaoConsultarClientes = input.nextInt();
 
                                 switch (opcaoConsultarClientes) {
-                                    case 1 -> {}
+    // 2.1. Por ID
+                                    case 1 -> {
+                                        System.out.print("Id: ");
+                                        input.nextLine();
+                                        String cliente = consultarClientes("id", input.nextLine()),
+                                        id = cliente.split(";")[0],
+                                        nome = cliente.split(";")[1],
+                                        dataNascimento = cliente.split(";")[2],
+                                        telefone = cliente.split(";")[3],
+                                        email = cliente.split(";")[4];
+
+                                        System.out.printf("""
+                                                Resultado da pesquisa:
+                                                Id: %s | Nome: %s | Data de nascimento: %s | Telefone: %s | Email: %s
+                                                """, id, nome, dataNascimento, telefone, email);
+                                    }
+    // 2.2. Por telefone
                                     case 2 -> {}
+    // 2.3. Por email
                                     case 3 -> {}
                                     default -> System.out.println("Opção inválida.");
                                 }
