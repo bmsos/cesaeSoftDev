@@ -1,6 +1,10 @@
 package extra_ficheiros;
 
 import java.io.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.Scanner;
 
 public class ex3 {
@@ -61,7 +65,7 @@ public class ex3 {
         lastId = lastId.split("-")[1];
         // "0042".split("0") --> {"", "", "42"}
         String[] purificadorNumero = lastId.split("0");      // criar um array para depois poder acrescentar uma quantidade de zeros à esquerda baseada em length da lista -1
-        String newId = docIdentifier + "-";
+        String newId = docIdentifier;
         for (int i = 0; i< purificadorNumero.length-1; i++) {
             newId += "0";
         }
@@ -88,7 +92,7 @@ public class ex3 {
         Scanner input = new Scanner(System.in);
         FileWriter fw = new FileWriter(fileClientesHotel, true);
         String cliente = "";
-        cliente += (autoIncrementarId(fileClientesHotel, "c") + ";");
+        cliente += (autoIncrementarId(fileClientesHotel, "c-") + ";");
         System.out.print("Nome: ");
         cliente += (input.nextLine() + ";");
         System.out.print("Data de nascimento (DD-MM-YYYY): ");
@@ -165,7 +169,7 @@ public class ex3 {
         // 1.2. Adicionar Tema
     static void adicionarTema (String nome, String multiplicadorPreco) throws IOException {
         File fileTemasHotel = new File("filesExtra/Ex_03 Hotel Temático/temasHotel.csv");
-        String id = autoIncrementarId(fileTemasHotel, "t"),
+        String id = autoIncrementarId(fileTemasHotel, "t-"),
         novoTema = id + ";" + nome + ";" + multiplicadorPreco;
 
         FileWriter fw = new FileWriter(fileTemasHotel, true);
@@ -174,10 +178,10 @@ public class ex3 {
     }
         // 1.3. Adicionar quarto
     static void adicionarQuarto (String numQuarto, String tema, String tipologia) throws IOException {
-        File fileTemasHotel = new File("filesExtra/Ex_03 Hotel Temático/quartosHotel.csv");
+        File fileQuartosHotel = new File("filesExtra/Ex_03 Hotel Temático/quartosHotel.csv");
         String novoQuarto = numQuarto + ";" + tema + ";" + tipologia;
 
-        FileWriter fw = new FileWriter(fileTemasHotel, true);
+        FileWriter fw = new FileWriter(fileQuartosHotel, true);
         fw.write(novoQuarto + "\n");
         fw.close();
     }
@@ -213,7 +217,7 @@ public class ex3 {
         // 1.5. Adicionar produto
     static void adicionarProduto (String nome, String precoUnitario) throws IOException {
         File fileProdutosHotel = new File("filesExtra/Ex_03 Hotel Temático/produtosHotel.csv");
-        String id = autoIncrementarId(fileProdutosHotel, "p");
+        String id = autoIncrementarId(fileProdutosHotel, "p-");
 
         String novoProduto = id + ";" + nome + ";" + precoUnitario + "\n";
 
@@ -223,7 +227,7 @@ public class ex3 {
 
     }
     // 2. Consultar clientes
-    static String consultarClientes (String tipoConsulta, String valor) throws FileNotFoundException {
+    static String[] consultarClientes (String tipoConsulta, String valor) throws FileNotFoundException {
         File fileClientesHotel = new File("filesExtra/Ex_03 Hotel Temático/clientesHotel.csv");
         Scanner sc = new Scanner(fileClientesHotel);
         String resultadoPesquisa = "";
@@ -236,19 +240,179 @@ public class ex3 {
                     tipoConsulta.equals("telefone") && valor.equals(telefone) ||
                     tipoConsulta.equals("email") && valor.equals(email)
             ) {
-                return linha;
+                return dadosCliente;
             }
         }
-        return "";
+        return new String[5];
     }
-
-    public static void main(String[] args) {
+    // 3. Consultar quartos disponíveis
+    static String[] quartosDisponiveis () throws FileNotFoundException {
+        File fileQuartosHotel = new File("filesExtra/Ex_03 Hotel Temático/quartosHotel.csv");
         File fileReservasHotel = new File("filesExtra/Ex_03 Hotel Temático/reservasHotel.csv");
+        Scanner scQuartos = new Scanner(fileQuartosHotel);
+        Scanner scReservas = new Scanner(fileReservasHotel);
+
+        String[] quartos = new String[contarLinhas(fileQuartosHotel)],
+                reservas = new String[contarLinhas(fileReservasHotel)],
+                quartosIndisponiveis = new String[contarLinhas(fileQuartosHotel)];
+
+        int index = 0;
+        while (scQuartos.hasNextLine()) {
+            quartos[index] = scQuartos.nextLine();
+            index++;
+        }
+
+        index = 0;
+        while (scReservas.hasNextLine()) {
+            reservas[index] = scReservas.nextLine();
+            index++;
+        }
+
+        index = 0;
+        for (String quarto : quartos) {
+            String numQuarto = quarto.split(";")[0];
+            for (String reserva : reservas) {
+                if (numQuarto.equals(reserva.split(";")[4])) {
+                    quartosIndisponiveis[index] = quarto;
+                    index++;
+                    break;
+                }
+            }
+        }
+
+        String[] quartosDisponiveis = new String[quartos.length - index];
+        index = 0;
+        for (String quarto : quartos) {
+            if (!Arrays.asList(quartosIndisponiveis).contains(quarto)) {
+                quartosDisponiveis[index] = quarto;
+                index++;
+            }
+        }
+        scQuartos.close();
+        scReservas.close();
+        return quartosDisponiveis;
+    }
+    // 4. Consultar reservas
+    static String[] totalReservas () throws FileNotFoundException {
+        File fileReservasHotel = new File("filesExtra/Ex_03 Hotel Temático/reservasHotel.csv");
+        Scanner sc = new Scanner(fileReservasHotel);
+        String[] totalReservas = new String[contarLinhas(fileReservasHotel)];
+        int index = 0;
+        while (sc.hasNextLine()) {
+            totalReservas[index] = sc.nextLine();
+            index++;
+        }
+        sc.close();
+        return totalReservas;
+    }
+    // 5. Nova reserva
+    static void registarReserva (String dataInicio, String dataFim, String cliente, String quarto) throws IOException {
+        File fileReservasHotel = new File("filesExtra/Ex_03 Hotel Temático/reservasHotel.csv");
+        String id = autoIncrementarId(fileReservasHotel, "r-a");
+        String novaReserva = id + ";" + dataInicio + ";" + dataFim + ";" + cliente + ";" + quarto;
+
+        FileWriter fw = new FileWriter(fileReservasHotel, true);
+        fw.write(novaReserva + "\n");
+        fw.close();
+    }
+    // 6. Dashboard
+    static int calcularReceitaTotalAnual (String ano) throws FileNotFoundException {
         File fileServicoQuartoHotel = new File("filesExtra/Ex_03 Hotel Temático/servicoQuartoHotel.csv");
+        File fileReservasHotel = new File("filesExtra/Ex_03 Hotel Temático/reservasHotel.csv");
+        File fileQuartosHotel = new File("filesExtra/Ex_03 Hotel Temático/quartosHotel.csv");
+        File fileProdutosHotel = new File("filesExtra/Ex_03 Hotel Temático/produtosHotel.csv");
+
+        String[] servicosQuartos = new String[contarLinhas(fileServicoQuartoHotel)];
+        String[] reservas = new String[contarLinhas(fileReservasHotel)];
+        String[] quartos = new String[contarLinhas(fileQuartosHotel)];
+        String[] produtos = new String[contarLinhas(fileProdutosHotel)];
+
+        Scanner scServicoQuarto = new Scanner(fileServicoQuartoHotel);
+        Scanner scReservas = new Scanner(fileReservasHotel);
+        Scanner scQuartos = new Scanner(fileQuartosHotel);
+        Scanner scProdutos = new Scanner(fileProdutosHotel);
+
+        int index = 0;
+        while (scServicoQuarto.hasNextLine()) {
+            servicosQuartos[index] = scServicoQuarto.nextLine();
+            index++;
+        }
+        index = 0;
+        while (scReservas.hasNextLine()) {
+            reservas[index] = scReservas.nextLine();
+            index++;
+        }
+        index = 0;
+        while (scQuartos.hasNextLine()) {
+            quartos[index] = scQuartos.nextLine();
+            index++;
+        }
+        index = 0;
+        while (scProdutos.hasNextLine()) {
+            produtos[index] = scProdutos.nextLine();
+            index++;
+        }
+
+        double receitaAnual = 0;
+
+        // 1ª PARTE - Calcular receita anual proveniente dos quartos (precoQuarto * multiplicadorPrecoTema * diasReserva)
+
+        for (String reserva : reservas) {
+            String anoReserva = reserva.split(";")[1].split("/")[2];   // reservas em passagem de ano entram na receita do ano de inicio da reserva --> anoReserva = ano da data de inicio
+            if (anoReserva.equals(ano)) {
+                double precoQuarto = 0, multiplicadorPreco = 0;
+                String numQuartoReserva = reserva.split(";")[4];
+                for (String quarto : quartos) {
+                    String numQuarto = quarto.split(";")[0],
+                    temaQuarto = quarto.split(";")[1],
+                    tipoQuarto = quarto.split(";")[2];
+                    if (numQuarto.equals(numQuartoReserva)) {
+                        for (String e : temas)
+                        System.out.println(reserva + " | " + temaQuarto + " | " + tipoQuarto);
+                    }
+                }
+            }
+        }
+        return 0;
+    }
+    static void mostrarDashboard () throws FileNotFoundException {
+        File fileServicoQuartoHotel = new File("filesExtra/Ex_03 Hotel Temático/servicoQuartoHotel.csv");
+        File fileReservasHotel = new File("filesExtra/Ex_03 Hotel Temático/reservasHotel.csv");
+        File fileQuartosHotel = new File("filesExtra/Ex_03 Hotel Temático/quartosHotel.csv");
+        File fileProdutosHotel = new File("filesExtra/Ex_03 Hotel Temático/produtosHotel.csv");
+        File fileTemasHotel = new File("filesExtra/Ex_03 Hotel Temático/temasHotel.csv");
+
+        double precoQuartoSingle = 95, precoQuartoDouble = 110, precoQuartoSuite = 250,
+        despesaNoiteLimpeza = 17.5, despesaNoiteLuzAgua = 12.75, despesaNoiteServicosAdministrativos = 7.25;
+
+        calcularReceitaTotalAnual("2023");
+    }
+    // 7. Mostrar Galeria
+    static void mostrarGaleria () throws FileNotFoundException {
         File fileGaleriaFachadaHotel = new File("filesExtra/Ex_03 Hotel Temático/galeriaFachadaHotel.txt");
         File fileGaleriaQuartoHotel = new File("filesExtra/Ex_03 Hotel Temático/galeriaQuartoHotel.txt");
         File fileGaleriaSpaHotel = new File("filesExtra/Ex_03 Hotel Temático/galeriaSpaHotel.txt");
 
+        Scanner scFachada = new Scanner(fileGaleriaFachadaHotel);
+        Scanner scQuarto = new Scanner(fileGaleriaQuartoHotel);
+        Scanner scSpa = new Scanner((fileGaleriaSpaHotel));
+
+        System.out.println("\n------------------------------- FACHADA -------------------------------------\n");
+        while (scFachada.hasNextLine()) {
+            System.out.println(scFachada.nextLine());
+        }
+        System.out.println("\n------------------------------- QUARTO 901 -------------------------------------\n");
+        while (scQuarto.hasNextLine()) {
+            System.out.println(scQuarto.nextLine());
+        }
+        System.out.println("\n------------------------------- SPA -------------------------------------\n");
+        while (scSpa.hasNextLine()) {
+            System.out.println(scSpa.nextLine());
+        }
+        System.out.println("\n--------------------------------------------------------------------\n");
+    }
+
+    public static void main(String[] args) {
         try {
             boolean sessaoIniciada = login();
             while (sessaoIniciada) {
@@ -265,8 +429,8 @@ public class ex3 {
                 8. Terminar sessão
                 """);
                 int opcao = 0;
-                while (opcao < 1 || opcao > 7) {
-                    System.out.print("Opção (1-7): ");
+                while (opcao < 1 || opcao > 8) {
+                    System.out.print("Opção (1-8): ");
                     opcao = input.nextInt();
 
                     switch (opcao) {
@@ -399,6 +563,7 @@ public class ex3 {
                         }
 // 2. Consultar Clientes
                         case 2 -> {
+                            String[] cliente = new String[5];
                             System.out.print("""
                             \nConsultar clientes:
                             1. Por ID
@@ -415,26 +580,29 @@ public class ex3 {
                                     case 1 -> {
                                         System.out.print("Id: ");
                                         input.nextLine();
-                                        String cliente = consultarClientes("id", input.nextLine()),
-                                        id = cliente.split(";")[0],
-                                        nome = cliente.split(";")[1],
-                                        dataNascimento = cliente.split(";")[2],
-                                        telefone = cliente.split(";")[3],
-                                        email = cliente.split(";")[4];
-
-                                        System.out.printf("""
-                                                Resultado da pesquisa:
-                                                Id: %s | Nome: %s | Data de nascimento: %s | Telefone: %s | Email: %s
-                                                """, id, nome, dataNascimento, telefone, email);
+                                        cliente = consultarClientes("id", input.nextLine());
                                     }
     // 2.2. Por telefone
-                                    case 2 -> {}
+                                    case 2 -> {
+                                        System.out.print("Contacto telefónico: ");
+                                        input.nextLine();
+                                        cliente = consultarClientes("telefone", input.nextLine());
+                                    }
     // 2.3. Por email
-                                    case 3 -> {}
+                                    case 3 -> {
+                                        System.out.print("Email: ");
+                                        input.nextLine();
+                                        cliente = consultarClientes("email", input.nextLine());
+                                    }
                                     default -> System.out.println("Opção inválida.");
                                 }
                             }
+                            System.out.printf("""
+                            Resultado da pesquisa:
+                            Id: %s | Nome: %s | Data de nascimento: %s | Telefone: %s | Email: %s
+                            %n""", cliente[0], cliente[1], cliente[2], cliente[3], cliente[4]);
                         }
+// 3. Consultar quartos disponíveis
                         case 3 -> {
                             System.out.print("""
                             \nConsultar quartos disponíveis:
@@ -448,13 +616,50 @@ public class ex3 {
                                 opcaoConsultarQuartosDisponiveis = input.nextInt();
 
                                 switch (opcaoConsultarQuartosDisponiveis) {
-                                    case 1 -> {}
-                                    case 2 -> {}
-                                    case 3 -> {}
+    // 3.1. Todos
+                                    case 1 -> {
+                                        System.out.println("-----------------------");
+                                        System.out.println("Quartos disponíveis:");
+                                        for (String e : quartosDisponiveis()) {
+                                            System.out.println(e);
+                                        }
+                                        System.out.println("-----------------------\n");
+                                    }
+    // 3.2. Por tema
+                                    case 2 -> {
+                                        System.out.print("Tema: ");
+                                        input.nextLine();
+                                        String tema = input.nextLine();
+
+                                        System.out.println("-----------------------");
+                                        System.out.println("Quartos disponíveis com esse tema:");
+                                        for (String e : quartosDisponiveis()) {
+                                            if(e.split(";")[1].equals(tema)) {
+                                                System.out.println(e);
+                                            }
+                                        }
+                                        System.out.println("-----------------------\n");
+                                    }
+    // 3.3. Por tipo
+                                    case 3 -> {
+                                        System.out.print("Tipo: ");
+                                        input.nextLine();
+                                        String tipo = input.nextLine().toUpperCase();
+
+                                        System.out.println("-----------------------");
+                                        System.out.println("Quartos disponíveis com esse tema:");
+                                        for (String e : quartosDisponiveis()) {
+                                            if(e.split(";")[2].equals(tipo)) {
+                                                System.out.println(e);
+                                            }
+                                        }
+                                        System.out.println("-----------------------\n");
+                                    }
                                     default -> System.out.println("Opção inválida.");
                                 }
                             }
                         }
+// 4. Consultar reservas
                         case 4 -> {
                             System.out.print("""
                             \nConsultar Reservas:
@@ -467,15 +672,59 @@ public class ex3 {
                                 opcaoConsultarReservas = input.nextInt();
 
                                 switch (opcaoConsultarReservas) {
-                                    case 1 -> {}
-                                    case 2 -> {}
+        // 4.1. Historico de reservas
+                                    case 1 -> {
+                                        System.out.println("-----------------------");
+                                        System.out.println("Histórico de reservas:");
+                                        for (String e : totalReservas()) {
+                                            System.out.println(e);
+                                        }
+                                        System.out.println("-----------------------\n");
+                                    }
+        // 4.2. Reservas ativas
+                                    case 2 -> {
+                                        System.out.println("-----------------------");
+                                        System.out.println("Reservas ativas:");
+                                        LocalDate hoje = LocalDate.now();
+
+                                        for (String e : totalReservas()) {
+                                            String[] dataInicioOriginal = e.split(";")[1].split("/");
+                                            String[] dataFimOriginal = e.split(";")[2].split("/");
+
+                                            LocalDate dataInicio = LocalDate.parse(dataInicioOriginal[2] + "-" + dataInicioOriginal[1] + "-" + dataInicioOriginal[0]);
+                                            LocalDate dataFim = LocalDate.parse(dataFimOriginal[2] + "-" + dataFimOriginal[1] + "-" + dataFimOriginal[0]);
+                                            if (dataInicio.isBefore(hoje) && dataFim.isAfter(hoje)) {
+                                                System.out.println(e);
+                                            }
+                                        }
+                                        System.out.println("-----------------------\n");
+                                    }
                                     default -> System.out.println("Opção inválida.");
                                 }
                             }
                         }
-                        case 5 -> {}
-                        case 6 -> {}
-                        case 7 -> {}
+// 5. Nova reserva
+                        case 5 -> {
+                            System.out.print("Data de início: ");
+                            input.nextLine();
+                            String dataInicio = input.nextLine();
+                            System.out.print("Data de fim: ");
+                            String dataFim = input.nextLine();
+                            System.out.print("Cliente: ");
+                            String cliente = input.nextLine();
+                            System.out.print("Quarto: ");
+                            String quarto = input.nextLine();
+                            registarReserva(dataInicio, dataFim, cliente, quarto);
+                            System.out.println("Reserva criada com sucesso.\n");
+                        }
+// 6. Dashboard de análise
+                        case 6 -> {
+                            mostrarDashboard();
+                        }
+// 7. Galeria
+                        case 7 -> {
+                            mostrarGaleria();
+                        }
                         case 8 -> sessaoIniciada = false;
                         default -> System.out.println("Opção inválida.");
                     }

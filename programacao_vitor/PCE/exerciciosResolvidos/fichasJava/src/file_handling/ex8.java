@@ -15,9 +15,7 @@ public class ex8 {
             String[] linha = sc.nextLine().split(",");
             double qtd = Double.parseDouble(linha[2]);
             double precoUnitario = Double.parseDouble(linha[3]);
-            for (int j=0; j< linha.length; j++) {
-                somaVendas += (precoUnitario * qtd) ;
-            }
+            somaVendas += (precoUnitario * qtd) ;
         }
 
         System.out.println("Total de vendas: " + somaVendas);
