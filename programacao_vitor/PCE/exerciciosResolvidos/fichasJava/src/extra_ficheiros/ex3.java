@@ -2,9 +2,7 @@ package extra_ficheiros;
 
 import java.io.*;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.Scanner;
 
 public class ex3 {
@@ -316,21 +314,57 @@ public class ex3 {
         fw.close();
     }
     // 6. Dashboard
-    static int calcularReceitaTotalAnual (String ano) throws FileNotFoundException {
+    static int converterDataEmDiasDesde1Janeiro2000 (String data) {
+        int totalDias = 0;
+        int dia = Integer.parseInt(data.split("/")[0]),
+                mes = Integer.parseInt(data.split("/")[1]),
+                ano = Integer.parseInt(data.split("/")[2]);
+
+        // adicionar 365 / 366 dias por ano
+        for (int i = 2000; i < ano; i++) {
+            if (i % 4 == 0) {
+                totalDias += 366;
+            } else {
+                totalDias += 365;
+            }
+        }
+
+        // adicionar 28/29/30/31 dias por mes
+        for (int i = 1; i < mes; i++) {
+            switch (i) {
+                case 2:
+                    if (ano % 4 != 0) {totalDias += 28;} else {totalDias += 29;}
+                    break;
+                case 4: case 6: case 9: case 11:
+                    totalDias += 30;
+                    break;
+                default: totalDias += 31;
+            }
+        }
+
+        // adicionar dias restantes
+        totalDias += dia;
+
+        return totalDias;
+    }
+    static double calcularReceitaAnual (String ano) throws FileNotFoundException {
         File fileServicoQuartoHotel = new File("filesExtra/Ex_03 Hotel Temático/servicoQuartoHotel.csv");
         File fileReservasHotel = new File("filesExtra/Ex_03 Hotel Temático/reservasHotel.csv");
         File fileQuartosHotel = new File("filesExtra/Ex_03 Hotel Temático/quartosHotel.csv");
         File fileProdutosHotel = new File("filesExtra/Ex_03 Hotel Temático/produtosHotel.csv");
+        File fileTemasHotel = new File("filesExtra/Ex_03 Hotel Temático/temasHotel.csv");
 
         String[] servicosQuartos = new String[contarLinhas(fileServicoQuartoHotel)];
         String[] reservas = new String[contarLinhas(fileReservasHotel)];
         String[] quartos = new String[contarLinhas(fileQuartosHotel)];
         String[] produtos = new String[contarLinhas(fileProdutosHotel)];
+        String[] temas = new String[contarLinhas(fileTemasHotel)];
 
         Scanner scServicoQuarto = new Scanner(fileServicoQuartoHotel);
         Scanner scReservas = new Scanner(fileReservasHotel);
         Scanner scQuartos = new Scanner(fileQuartosHotel);
         Scanner scProdutos = new Scanner(fileProdutosHotel);
+        Scanner scTemas = new Scanner(fileTemasHotel);
 
         int index = 0;
         while (scServicoQuarto.hasNextLine()) {
@@ -352,40 +386,126 @@ public class ex3 {
             produtos[index] = scProdutos.nextLine();
             index++;
         }
+        index = 0;
+        while (scTemas.hasNextLine()) {
+            temas[index] = scTemas.nextLine();
+            index++;
+        }
 
         double receitaAnual = 0;
 
         // 1ª PARTE - Calcular receita anual proveniente dos quartos (precoQuarto * multiplicadorPrecoTema * diasReserva)
-
         for (String reserva : reservas) {
             String anoReserva = reserva.split(";")[1].split("/")[2];   // reservas em passagem de ano entram na receita do ano de inicio da reserva --> anoReserva = ano da data de inicio
+            double precoQuarto = 95, multiplicadorPreco = 1;
+            int diasReserva = 0;
             if (anoReserva.equals(ano)) {
-                double precoQuarto = 0, multiplicadorPreco = 0;
-                String numQuartoReserva = reserva.split(";")[4];
-                for (String quarto : quartos) {
+                String numQuartoReserva = reserva.split(";")[4],
+                dataInicio = reserva.split(";")[1],
+                dataFim = reserva.split(";")[2];
+                diasReserva = converterDataEmDiasDesde1Janeiro2000(dataFim) - converterDataEmDiasDesde1Janeiro2000(dataInicio);
+                for (String quarto : quartos) {     // join do ficheiro reserva com o dos quartos
                     String numQuarto = quarto.split(";")[0],
-                    temaQuarto = quarto.split(";")[1],
+                    idTemaQuarto = quarto.split(";")[1],
                     tipoQuarto = quarto.split(";")[2];
                     if (numQuarto.equals(numQuartoReserva)) {
-                        for (String e : temas)
-                        System.out.println(reserva + " | " + temaQuarto + " | " + tipoQuarto);
+                        precoQuarto = switch (tipoQuarto) {
+                            case "SUITE" -> 250;
+                            case "DOUBLE" -> 110;
+                            default -> 95;
+                        };
+                        for (String tema : temas) {     // join do ficheiro quartos com o dos temas
+                            String idTema = tema.split(";")[0];
+                            if (idTema.equals(idTemaQuarto)) {
+                                multiplicadorPreco = Double.parseDouble(tema.split(";")[2]);
+                            }
+                        }
                     }
                 }
+                receitaAnual += precoQuarto * multiplicadorPreco * diasReserva;
             }
         }
-        return 0;
+
+        // 2ª PARTE - adicionar à receita anual o valor dos produtos vendidos no serviço de quartos
+        // calculo (produtoVendido * qtd) por cada registo de serviço (excluir gorjeta pois assume-se que vai para funcionario)
+        for (String servico : servicosQuartos) {
+            String idProduto = servico.split(";")[2];
+            int qtd = Integer.parseInt(servico.split(";")[3]);
+            double precoProduto = 0;
+            for (String produto : produtos) {
+                String id = produto.split(";")[0];
+                if (idProduto.equals(id)) {
+                    precoProduto = Double.parseDouble(produto.split(";")[2]);
+                }
+            }
+            receitaAnual += precoProduto * qtd;
+        }
+        return receitaAnual;
+    }
+    static double[] calcularDespesaAnual (String ano) throws FileNotFoundException {
+        File fileReservasHotel = new File("filesExtra/Ex_03 Hotel Temático/reservasHotel.csv");
+        Scanner scReservas = new Scanner(fileReservasHotel);
+
+        String[] reservas = new String[contarLinhas(fileReservasHotel)];
+        int index = 0;
+        while (scReservas.hasNextLine()) {
+            reservas[index] = scReservas.nextLine();
+            index++;
+        }
+        double despesasLimpeza = 17.5, despesasLuzAgua = 12.75, despesasAdministrativas = 7.25, totalDespesas = 0;
+        int dias = 0;
+        for (String reserva : reservas) {
+            String dataInicio = reserva.split(";")[1],
+            dataFim = reserva.split(";")[2],
+            anoReserva = dataInicio.split("/")[2];
+            if (anoReserva.equals(ano)) {
+                dias += (converterDataEmDiasDesde1Janeiro2000(dataFim) - converterDataEmDiasDesde1Janeiro2000(dataInicio));
+            }
+        }
+
+        despesasLimpeza *= dias;
+        despesasLuzAgua *= dias;
+        despesasAdministrativas *= dias;
+        totalDespesas = despesasLimpeza + despesasLuzAgua + despesasAdministrativas;
+
+        return new double[] {totalDespesas, despesasLimpeza, despesasLuzAgua, despesasAdministrativas};
+    }
+    static String[] melhorCliente () throws FileNotFoundException {
+        File fileClientesHotel = new File("filesExtra/Ex_03 Hotel Temático/clientesHotel.csv");
+        return new String[2]; // [0] - cliente | [1] - gasto
     }
     static void mostrarDashboard () throws FileNotFoundException {
-        File fileServicoQuartoHotel = new File("filesExtra/Ex_03 Hotel Temático/servicoQuartoHotel.csv");
-        File fileReservasHotel = new File("filesExtra/Ex_03 Hotel Temático/reservasHotel.csv");
-        File fileQuartosHotel = new File("filesExtra/Ex_03 Hotel Temático/quartosHotel.csv");
-        File fileProdutosHotel = new File("filesExtra/Ex_03 Hotel Temático/produtosHotel.csv");
-        File fileTemasHotel = new File("filesExtra/Ex_03 Hotel Temático/temasHotel.csv");
 
-        double precoQuartoSingle = 95, precoQuartoDouble = 110, precoQuartoSuite = 250,
-        despesaNoiteLimpeza = 17.5, despesaNoiteLuzAgua = 12.75, despesaNoiteServicosAdministrativos = 7.25;
+        double despesaNoiteLimpeza = 17.5, despesaNoiteLuzAgua = 12.75, despesaNoiteServicosAdministrativos = 7.25;
+        System.out.println("-------------------------------------");
+        System.out.println("Receita anual: ");
+        System.out.printf("\t2022: %s€%n", calcularReceitaAnual("2022"));
+        System.out.printf("\t2023: %s€%n", calcularReceitaAnual("2023"));
+        System.out.printf("\t2024: %s€%n", calcularReceitaAnual("2024"));
+        System.out.println();
 
-        calcularReceitaTotalAnual("2023");
+        double[][] despesasAnuais = {
+                calcularDespesaAnual("2022"),
+                calcularDespesaAnual("2023"),
+                calcularDespesaAnual("2024")
+        };
+
+        System.out.println("Despesa anual: ");
+        System.out.printf("\t2022: %s€%n", despesasAnuais[0][0]);
+        System.out.printf("\t\tLimpeza: %s€ | Luz/Água: %s€ | Serviços administrativos: %s€%n", despesasAnuais[0][1], despesasAnuais[0][2], despesasAnuais[0][3]);
+        System.out.printf("\t2023: %s€%n", despesasAnuais[1][0]);
+        System.out.printf("\t\tLimpeza: %s€ | Luz/Água: %s€ | Serviços administrativos: %s€%n", despesasAnuais[1][1], despesasAnuais[1][2], despesasAnuais[1][3]);
+        System.out.printf("\t2024: %s€%n", despesasAnuais[2][0]);
+        System.out.printf("\t\tLimpeza: %s€ | Luz/Água: %s€ | Serviços administrativos: %s€%n", despesasAnuais[2][1], despesasAnuais[2][2], despesasAnuais[2][3]);
+        System.out.println();
+
+        System.out.println("Lucro anual: ");
+        System.out.printf("\t2022: %s€%n", calcularReceitaAnual("2022") - calcularDespesaAnual("2022")[0]);
+        System.out.printf("\t2023: %s€%n", calcularReceitaAnual("2023") - calcularDespesaAnual("2023")[0]);
+        System.out.printf("\t2024: %s€%n", calcularReceitaAnual("2024") - calcularDespesaAnual("2024")[0]);
+
+
+        System.out.println("-------------------------------------");
     }
     // 7. Mostrar Galeria
     static void mostrarGaleria () throws FileNotFoundException {
