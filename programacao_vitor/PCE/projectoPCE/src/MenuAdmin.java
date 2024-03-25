@@ -1,10 +1,7 @@
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class App {
+public class MenuAdmin {
     /**
      * Encapsula a validação de credenciais dentro da funcao login() -
      * criada para possibilitar a reciclagem do scanner do file após login falhado
@@ -123,7 +120,7 @@ public class App {
     }
 
     /**
-     * Retorna todos os compradores dum jogo cujo nome foi passado como argumento
+     * Retorna todos os compradores dum jogo cujo nome foi passado por parametro
      * @param nomeJogo String
      * @param vendas matriz do ficheiro vendas
      * @param clientes matriz do ficheiro clientes
@@ -159,7 +156,7 @@ public class App {
     }
 
     /**
-     * Retorna o cliente com o ID indicado como argumento
+     * Retorna o cliente com o ID indicado por parametro
      * @param clientes matriz do ficheiro clientes
      * @param idCliente id do cliente
      * @return String[] cliente
@@ -294,7 +291,7 @@ public class App {
         for (int i = 1; i< vendas.length; i++) {
             String categoria = vendas[i][3];
             double receitaCategoria = Double.parseDouble(vendas[i][5]),
-            margemLucro = 1;
+                    margemLucro = 1;
 
             // calcular receita total de cada categoria
             for (int k=i+1; k<vendas.length; k++) {
@@ -321,7 +318,7 @@ public class App {
         return melhorCategoria;
     }
 
-     /**
+    /**
      * Avalia quais os 5 jogos que deram mais ou menos lucro (dependendo do @param typeOfSearch) (+ os respetivos lucros)
      * @param typeOfSearch "top" -> Top 5 Jogos | "bottom" -> Bottom 5 jogos
      * @param vendas matriz do ficheiro vendas
@@ -334,7 +331,7 @@ public class App {
         int index = 0;
         while (index < 5) { // pára quando o index chegar a 5 (a matriz de retorno está cheia)
             double maiorLucroJogo = 0, lucroJogo = 0,
-            menorLucroJogo = Double.parseDouble(vendas[1][5]);   // iniciar menorLucroJogo com a primera receita de vendas (menorLucro nunca vai ser maior);
+                    menorLucroJogo = Double.parseDouble(vendas[1][5]);   // iniciar menorLucroJogo com a primera receita de vendas (menorLucro nunca vai ser maior);
             String nome = "", categoria = "", editora = "";
             for (int i = 1; i< vendas.length; i++) {
                 String nomeJogo = vendas[i][4], categoriaJogo = vendas[i][3];
@@ -394,11 +391,7 @@ public class App {
         return jogos;
     }
 
-    /**
-     * Procedimento para mostrar menu de administrador
-     * @throws FileNotFoundException caso ficheiro nao encontrado
-     */
-    static void mostrarMenuAdmin () throws FileNotFoundException {
+    public static void main(String[] args) throws FileNotFoundException {
         String[][] vendas = Utils.converterFicheiroEmMatriz(DBFiles.fileVendas);
         String[][] clientes = Utils.converterFicheiroEmMatriz(DBFiles.fileClientes);
         String[][] categorias = Utils.converterFicheiroEmMatriz(DBFiles.fileCategorias);
@@ -487,6 +480,7 @@ public class App {
                         Email: %s
                         ---------------------------
                         """, cliente[0], cliente[1], cliente[2], cliente[3]);
+
                     }
                     case 5 -> {
                         String[] jogoMaisCaro = jogoMaisCaro(vendas);
@@ -576,310 +570,5 @@ public class App {
                 }
             }
         }
-    }
-
-    /**
-     * Simula um novo registo de cliente (apenas imprime os dados)
-     * @param nome String
-     * @param telefone String
-     * @param email String
-     * @throws FileNotFoundException
-     */
-    static void registarCliente (String nome, String telefone, String email) throws FileNotFoundException {
-        System.out.println("Cliente registado com sucesso.");
-        System.out.printf("Nome: %s | Contacto telefónico: %s | Email: %s%n", nome, telefone, email);
-        System.out.println("---------------------------");
-    }
-
-    /** Procura um lugar vago (triangular e multiplo de 5) e pergunta se cliente quer reservar esse lugar
-     * - se sim, imprime "lugar reservado"
-     * - se nao, volta a procurar lugar e pergunta se quer reservar
-     *  - repete processo ate reservar lugar ou ate chegar ao lugar 121
-     */
-    static void procurarEstacionamento () {
-        Scanner input = new Scanner(System.in);
-        System.out.println("---------------------------");
-
-        boolean lugarReservado = false;
-        int n = 1;
-        while (!lugarReservado && n <= 121) {
-            if (Utils.verificarNumTriangular(n) && n % 5 == 0) {
-                System.out.printf("Lugar %s está de vago.%n", n);
-
-                // forçar resposta valida
-                String resposta = "";
-                boolean respostaValida = false;
-                while (!respostaValida) {
-                    System.out.print("Reservar? (s/n): ");
-                    resposta = input.nextLine();
-                    respostaValida = resposta.equalsIgnoreCase("s") || resposta.equalsIgnoreCase("n");
-
-                    if (!respostaValida) {
-                        System.out.println("Resposta inválida.");
-                    }
-                }
-                lugarReservado = resposta.equals("s");
-            }
-            n++;
-        }
-        if (lugarReservado) {
-            System.out.printf("Lugar %s foi reservado para si.%n", n-1);
-        } else {
-            System.out.println("Não há mais lugares de vago.");
-
-            // forçar resposta válida
-            String resposta = "";
-            boolean respostaValida = false;
-            while (!respostaValida) {
-                System.out.print("Voltar a procurar lugar? (s/n): ");
-                resposta = input.nextLine();
-                respostaValida = resposta.equalsIgnoreCase("s") || resposta.equalsIgnoreCase("n");
-
-                if (!respostaValida) {
-                    System.out.println("Resposta inválida.");
-                }
-            }
-            if (resposta.equals("s")) {
-                procurarEstacionamento();
-            }
-        }
-    }
-
-    /**
-     * Analisa todos os jogos no ficheiro vendas e retorna-os numa matriz (exclui os duplicados)
-     * @param vendas matriz do ficheiro vendas
-     * @return String[][] catalogo de jogos
-     */
-    static String[][] getCatalogo (String[][] vendas) {
-        String[][] jogos = new String[vendas.length-1][4];
-
-        // passar jogos para uma matriz (sem duplicados)
-        int index = 0;
-        for (int i=1; i<vendas.length; i++) {
-            String nomeJogo = vendas[i][4], categoria = vendas[i][3], editora = vendas[i][2], preco = vendas[i][5];
-
-            // verificar se jogo já existe na String[][] jogos
-            boolean estaEmJogos = false;
-            for (String[] jogo : jogos) {
-                if (nomeJogo.equals(jogo[0])) {
-                    estaEmJogos = true;
-                }
-            }
-            if (!estaEmJogos) { // passar jogo para String[][] jogos (se ja lá nao estiver)
-                jogos[index][0] = nomeJogo;
-                jogos[index][1] = categoria;
-                jogos[index][2] = editora;
-                jogos[index][3] = preco;
-
-                index++;
-            }
-        }
-
-        String[][] catalogo = new String[index][4]; // matriz de retorno (sem os nulls)
-        // passar jogos da primeira para a segunda matriz
-        for (int i=0; i< catalogo.length; i++) {
-            catalogo[i] = jogos[i];
-        }
-
-        return catalogo;
-    }
-
-    static String[][] getCatalogoEditora (String editoraIndicada, String[][] vendas) {
-        String[][] jogosDaEditora = new String[vendas.length-1][3];
-        int index = 0;
-        for (int i=1; i<vendas.length; i++) {
-            String nomeJogo = vendas[i][4], categoria = vendas[i][3], editora = vendas[i][2], preco = vendas[i][5];
-
-            // verificar se jogo já existe na String[][] jogosDaEditora
-            boolean estaEmJogosEditora = false;
-            for (String[] jogo : jogosDaEditora) {
-                if (nomeJogo.equals(jogo[0])) {
-                    estaEmJogosEditora = true;
-                }
-            }
-
-            if (editora.equals(editoraIndicada) && !estaEmJogosEditora) {    // passar jogo para String[][] jogosDaEditora (se ja lá nao estiver)
-                jogosDaEditora[index][0] = nomeJogo;
-                jogosDaEditora[index][1] = categoria;
-                jogosDaEditora[index][2] = preco;
-
-                index++;
-            }
-        }
-
-        String[][] catalogoEditora = new String[index][3]; // matriz de retorno (sem os nulls)
-        // passar jogos da primeira para a segunda matriz
-        for (int i=0; i< catalogoEditora.length; i++) {
-            catalogoEditora[i] = jogosDaEditora[i];
-        }
-
-        return catalogoEditora;
-    }
-
-    /**
-     * Procedimento para mostrar menu de cliente
-     * @throws FileNotFoundException caso ficheiro nao encontrado
-     */
-    static void mostrarMenuCliente () throws FileNotFoundException {
-        String[][] vendas = Utils.converterFicheiroEmMatriz(DBFiles.fileVendas);
-        Scanner input = new Scanner(System.in);
-        boolean sessaoIniciada = true;
-
-        while (sessaoIniciada) {
-            System.out.print("""
-            Menu de cliente:
-            1. Registar cliente
-            2. Procurar estacionamento
-            3. Mostrar catálogo
-            4. Mostrar Catálogos Gráficos
-            5. Mostrar Catálogo Editora
-            6. Mostrar Catálogo Categoria
-            7. Mostrar jogo mais recente
-            8. Terminar sessão de cliente
-            """);
-            int opcao = 0;
-            while (opcao < 1 || opcao > 8) {
-                System.out.print("Opção (1-8): ");
-                opcao = input.nextInt();
-                switch (opcao) {
-                    case 1 -> {
-                        System.out.print("Nome: ");
-                        input.nextLine();
-                        String nome = input.nextLine();
-                        System.out.print("Contacto telefónico: ");
-                        String telefone = input.nextLine();
-                        System.out.print("Email: ");
-                        String email = input.nextLine();
-
-                        registarCliente(nome, telefone, email);
-                    }
-                    case 2 -> {
-                        procurarEstacionamento();
-                        System.out.println("---------------------------");
-                    }
-                    case 3 -> {
-                        System.out.print("""
-                        ---------------------------
-                        Catálogo de jogos:
-                        Nome | Categoria | Editora | Preço (€)
-                        """);
-                        Utils.imprimirMatriz(getCatalogo(vendas));
-                        System.out.println("---------------------------");
-                    }
-                    case 4 -> {
-                        System.out.print("""
-                        \tJogos:
-                        \t1. Call of Duty
-                        \t2. FIFA
-                        \t3. Hollow Knight
-                        \t4. Minecraft
-                        \t5. Mortal Kombat
-                        \t6. Overcooked
-                        \t7. The Witcher III
-                        """);
-                        int opcaoArteGrafica = 0;
-                        while (opcaoArteGrafica < 1 || opcaoArteGrafica > 8) {
-                            System.out.print("\tOpção (1-7): ");
-                            opcaoArteGrafica = input.nextInt();
-                            switch (opcaoArteGrafica) {
-                                case 1 -> {
-                                    System.out.println("---------------------------");
-                                    Utils.imprimirArteGrafica(DBFiles.fileCallOfDuty);
-                                    System.out.println("---------------------------");
-                                }
-                                case 2 -> {
-                                    System.out.println("---------------------------");
-                                    Utils.imprimirArteGrafica(DBFiles.fileFifa);
-                                    System.out.println("---------------------------");
-                                }
-                                case 3 -> {
-                                    System.out.println("---------------------------");
-                                    Utils.imprimirArteGrafica(DBFiles.fileHollowKnight);
-                                    System.out.println("---------------------------");
-                                }
-                                case 4 -> {
-                                    System.out.println("---------------------------");
-                                    Utils.imprimirArteGrafica(DBFiles.fileMinecraft);
-                                    System.out.println("---------------------------");
-                                }
-                                case 5 -> {
-                                    System.out.println("---------------------------");
-                                    Utils.imprimirArteGrafica(DBFiles.fileMortalKombat);
-                                    System.out.println("---------------------------");
-                                }
-                                case 6 -> {
-                                    System.out.println("---------------------------");
-                                    Utils.imprimirArteGrafica(DBFiles.fileOvercooked);
-                                    System.out.println("---------------------------");
-                                }
-                                case 7 -> {
-                                    System.out.println("---------------------------");
-                                    Utils.imprimirArteGrafica(DBFiles.fileWitcher3);
-                                    System.out.println("---------------------------");
-                                }
-                                default -> System.out.println("\tOpção inválida");
-                            }
-                        }
-                    }
-                    case 5 -> {
-                        System.out.print("Editora: ");
-                        input.nextLine();
-                        String editora = input.nextLine();
-                        getCatalogoEditora(editora, vendas);
-                    }
-                    case 6 -> {}
-                    case 7 -> {}
-                    case 8 -> {
-                        System.out.println("Sessão terminada.\n");
-                        sessaoIniciada = false;
-                    }
-                    default -> System.out.println("Opção inválida");
-                }
-            }
-        }
-    }
-    public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
-        boolean sair = false;
-        do {
-            System.out.print("""
-            Entrar como:
-            1. Administrador
-            2. Cliente
-            3. Sair
-            """);
-
-            // validar se input é int-parsable ----------
-            int opcao = 0;
-            boolean respostaNumerica = false;
-            while (!respostaNumerica) {
-                System.out.print("Opção (1-3): ");
-                try {
-                    opcao = input.nextInt();
-                    respostaNumerica = true;
-                } catch (InputMismatchException erro) {
-                    System.out.println("Resposta deve ser numérica.");
-                    input.nextLine(); // clean buffer
-                }
-            }
-            // ----------------------------------------
-
-            try {
-                switch (opcao) {
-                    case 1 -> {
-                        if (login()) {      // login() já contem a logica necessaria para tratamento de credenciais invalidas
-                            mostrarMenuAdmin();
-                        }
-                    }
-                    case 2 -> {
-                        mostrarMenuCliente();
-                    }
-                    case 3 -> sair = true;
-                    default -> System.out.println("Opção inválida.");
-                }
-            } catch (FileNotFoundException erro) {
-                System.out.println("Não foi possível verificar os dados. Estamos a tratar do problema!");
-            }
-        } while (!sair);
     }
 }

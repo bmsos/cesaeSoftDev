@@ -9,7 +9,7 @@ public class Utils {
      * @return String[][] - matriz com os dados do ficheiro
      * @throws FileNotFoundException
      */
-    public static String[][] converterFicheiroEmMatriz (File file) throws FileNotFoundException {
+    static String[][] converterFicheiroEmMatriz (File file) throws FileNotFoundException {
         int linhas = 0, colunas=0;
         Scanner scRead = new Scanner(file);
         while (scRead.hasNextLine()) {
@@ -34,12 +34,40 @@ public class Utils {
      * Imprime uma matriz em formato tabela
      * @param matriz - para usar maioritariamente na visualização de ficheiros
      */
-    public static void imprimirMatriz (String[][] matriz) {
+    static void imprimirMatriz (String[][] matriz) {
         for (String[] linha : matriz) {
             for (String elemento : linha) {
                 System.out.printf("%s | ", elemento);
             }
             System.out.println();
         }
+    }
+
+    static void imprimirArteGrafica (File file) throws FileNotFoundException {
+        Scanner sc = new Scanner(file);
+        while (sc.hasNextLine()) {
+            System.out.println(sc.nextLine());
+        }
+    }
+
+    /**
+     * Verifica se numero passado como argumento é triangular
+     * @param n numero a avaliar
+     * @return true: é triangular | false: nao é triangular
+     */
+    static boolean verificarNumTriangular (int n) {
+        int soma = 0;
+        for (int i=1; i < n; i++) {
+            soma += i;
+
+            if (soma == n) {
+                return true;
+            }
+
+            if (soma > n) {
+                break;
+            }
+        }
+        return false;
     }
 }
