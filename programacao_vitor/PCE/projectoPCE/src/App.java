@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.SQLOutput;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -684,36 +685,135 @@ public class App {
         return catalogo;
     }
 
-    static String[][] getCatalogoEditora (String editoraIndicada, String[][] vendas) {
-        String[][] jogosDaEditora = new String[vendas.length-1][3];
+    /**
+     * Retorna um catalogo filtrado por editora ou categoria
+     * @param tipoFiltro String -> "editora": retorna catalogo de uma editora || "categoria": retorna catalogo de uma categoria
+     * @param valorFiltro String -> nome da editora ou categoria (dependendo do tipoFiltro)
+     * @param vendas matriz do ficheiro vendas
+     * @return String[][] catalogo da editora ou categoria pretendida
+     */
+    static String[][] getCatalogoFiltrado (String tipoFiltro, String valorFiltro, String[][] vendas) {
+        // era possivel retornar uma matriz com 3 colunas (sem editora) mas
+        // mantive a editora para uniformizar a estrutura de uma matriz para catalogos (4 colunas)
+        String[][] jogosFiltrados = new String[vendas.length-1][4];
         int index = 0;
         for (int i=1; i<vendas.length; i++) {
             String nomeJogo = vendas[i][4], categoria = vendas[i][3], editora = vendas[i][2], preco = vendas[i][5];
 
-            // verificar se jogo já existe na String[][] jogosDaEditora
-            boolean estaEmJogosEditora = false;
-            for (String[] jogo : jogosDaEditora) {
+            // verificar se jogo já existe na String[][] jogosFiltrados
+            boolean foiAdicionado = false;
+            for (String[] jogo : jogosFiltrados) {
                 if (nomeJogo.equals(jogo[0])) {
-                    estaEmJogosEditora = true;
+                    foiAdicionado = true;
                 }
             }
 
-            if (editora.equals(editoraIndicada) && !estaEmJogosEditora) {    // passar jogo para String[][] jogosDaEditora (se ja lá nao estiver)
-                jogosDaEditora[index][0] = nomeJogo;
-                jogosDaEditora[index][1] = categoria;
-                jogosDaEditora[index][2] = preco;
+            // passar jogo para String[][] jogosFiltrados (se ja lá nao estiver)
+            if (!foiAdicionado) {
+                if (tipoFiltro.equals("editora") && editora.equals(valorFiltro)) {
+                    jogosFiltrados[index][0] = nomeJogo;
+                    jogosFiltrados[index][1] = categoria;
+                    jogosFiltrados[index][2] = editora;
+                    jogosFiltrados[index][3] = preco;
 
-                index++;
+                    index++;
+                }
+                if (tipoFiltro.equals("categoria") && categoria.equals(valorFiltro)) {
+                    jogosFiltrados[index][0] = nomeJogo;
+                    jogosFiltrados[index][1] = categoria;
+                    jogosFiltrados[index][2] = editora;
+                    jogosFiltrados[index][3] = preco;
+
+                    index++;
+                }
             }
         }
 
-        String[][] catalogoEditora = new String[index][3]; // matriz de retorno (sem os nulls)
+        String[][] catalogoFiltrado = new String[index][4]; // matriz de retorno (sem os nulls)
         // passar jogos da primeira para a segunda matriz
-        for (int i=0; i< catalogoEditora.length; i++) {
-            catalogoEditora[i] = jogosDaEditora[i];
+        for (int i=0; i< catalogoFiltrado.length; i++) {
+            catalogoFiltrado[i] = jogosFiltrados[i];
         }
 
-        return catalogoEditora;
+        return catalogoFiltrado;
+    }
+
+    /**
+     * Imprime um catálogo de forma organizada por categorias
+     * @param catalogo - String[][]
+     */
+    static void printCatalogoPorCategoria (String[][] catalogo) {
+        String[] categorias = new String[catalogo.length];
+
+        // 1º PARTE - criar um array com as categorias disponiveis
+        int qtdCategorias = 0;
+        for (String[] jogo : catalogo) {
+            String categoriaJogo = jogo[1];
+
+            // verificar se categoria já existe na String[] categorias
+            boolean foiAdicionado = false;
+            for (String elemento : categorias) {
+                if (categoriaJogo.equals(elemento)) {
+                    foiAdicionado = true;
+                }
+            }
+
+            if (!foiAdicionado) {
+                categorias[qtdCategorias] = categoriaJogo;
+                qtdCategorias++;
+            }
+        }
+
+        // 2ª PARTE - Imprimir jogos por categoria
+        for (int i=0; i<qtdCategorias; i++) {
+            System.out.println(categorias[i] + ": ");
+            for (String[] jogo : catalogo) {
+                String categoriaJogo = jogo[1];
+                if (categoriaJogo.equals(categorias[i])) {
+                    System.out.println(jogo[0]);
+                }
+            }
+            System.out.println();
+        }
+    }
+
+    /**
+     * Imprime um catálogo de forma organizada por editoras
+     * @param catalogo - String[][]
+     */
+    static void printCatalogoPorEditora (String[][] catalogo) {
+        String[] editoras = new String[catalogo.length];
+
+        // 1º PARTE - criar um array com as editoras disponiveis
+        int qtdEditoras = 0;
+        for (String[] jogo : catalogo) {
+            String editoraJogo = jogo[2];
+
+            // verificar se categoria já existe na String[] editoras
+            boolean foiAdicionado = false;
+            for (String elemento : editoras) {
+                if (editoraJogo.equals(elemento)) {
+                    foiAdicionado = true;
+                }
+            }
+
+            if (!foiAdicionado) {
+                editoras[qtdEditoras] = editoraJogo;
+                qtdEditoras++;
+            }
+        }
+
+        // 2ª PARTE - Imprimir jogos por editora
+        for (int i=0; i<qtdEditoras; i++) {
+            System.out.println(editoras[i] + ": ");
+            for (String[] jogo : catalogo) {
+                String editoraJogo = jogo[2];
+                if (editoraJogo.equals(editoras[i])) {
+                    System.out.println(jogo[0]);
+                }
+            }
+            System.out.println();
+        }
     }
 
     /**
@@ -825,10 +925,37 @@ public class App {
                         System.out.print("Editora: ");
                         input.nextLine();
                         String editora = input.nextLine();
-                        getCatalogoEditora(editora, vendas);
+
+                        System.out.println("---------------------------");
+                        System.out.printf("Catálogo da Editora %s:%n", editora);
+                        printCatalogoPorCategoria(getCatalogoFiltrado("editora", editora, vendas));
+                        System.out.println("---------------------------");
                     }
-                    case 6 -> {}
-                    case 7 -> {}
+                    case 6 -> {
+                        System.out.print("Categoria: ");
+                        input.nextLine();
+                        String categoria = input.nextLine();
+
+                        System.out.println("---------------------------");
+                        System.out.printf("Catálogo da Categoria %s:%n", categoria);
+                        printCatalogoPorEditora(getCatalogoFiltrado("categoria", categoria, vendas));
+                        System.out.println("---------------------------");
+                    }
+                    case 7 -> {
+                        String[][] catalogo = getCatalogo(vendas);
+                        String[] jogoMaisRecente = catalogo[catalogo.length-1];
+                        String nome = jogoMaisRecente[0], categoria = jogoMaisRecente[1], editora = jogoMaisRecente[2], preco = jogoMaisRecente[3];
+
+                        System.out.println("---------------------------");
+                        System.out.println("Jogo mais recente:");
+                        System.out.printf("""
+                        Nome: %s
+                        Categoria: %s
+                        Editora: %s
+                        Preço: %s€
+                        """, nome, categoria, editora, preco);
+                        System.out.println("---------------------------");
+                    }
                     case 8 -> {
                         System.out.println("Sessão terminada.\n");
                         sessaoIniciada = false;
@@ -881,5 +1008,17 @@ public class App {
                 System.out.println("Não foi possível verificar os dados. Estamos a tratar do problema!");
             }
         } while (!sair);
+
+        try {
+            Utils.imprimirArteGrafica(DBFiles.fileCopyright);
+        } catch (FileNotFoundException erro) {
+            System.out.println("---------------------------");
+            System.out.println("Desenvolvido por:");
+            System.out.println("Bruno Oliveira Santos");
+            System.out.println("Software Developer - CESAE");
+            System.out.println("---------------------------");
+        }
+
+
     }
 }

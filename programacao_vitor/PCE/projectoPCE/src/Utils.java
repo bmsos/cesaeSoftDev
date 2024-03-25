@@ -3,13 +3,13 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Utils {
-    /** Converte os dados de um ficheiro numa matriz (todas as linhas incluindo cabeçalho)
-     *
+    /**
+     * Converte os dados de um ficheiro numa matriz (todas as linhas incluindo cabeçalho)
      * @param file
      * @return String[][] - matriz com os dados do ficheiro
      * @throws FileNotFoundException
      */
-    static String[][] converterFicheiroEmMatriz (File file) throws FileNotFoundException {
+    public static String[][] converterFicheiroEmMatriz (File file) throws FileNotFoundException {
         int linhas = 0, colunas=0;
         Scanner scRead = new Scanner(file);
         while (scRead.hasNextLine()) {
@@ -34,7 +34,7 @@ public class Utils {
      * Imprime uma matriz em formato tabela
      * @param matriz - para usar maioritariamente na visualização de ficheiros
      */
-    static void imprimirMatriz (String[][] matriz) {
+    public static void imprimirMatriz (String[][] matriz) {
         for (String[] linha : matriz) {
             for (String elemento : linha) {
                 System.out.printf("%s | ", elemento);
@@ -43,7 +43,12 @@ public class Utils {
         }
     }
 
-    static void imprimirArteGrafica (File file) throws FileNotFoundException {
+    /**
+     * Metodo usado para imprimir arte gráfica (catalogo grafico e copyright)
+     * @param file ficheiro pretendido
+     * @throws FileNotFoundException caso ficheiro nao encontrado
+     */
+    public static void imprimirArteGrafica (File file) throws FileNotFoundException {
         Scanner sc = new Scanner(file);
         while (sc.hasNextLine()) {
             System.out.println(sc.nextLine());
@@ -55,7 +60,7 @@ public class Utils {
      * @param n numero a avaliar
      * @return true: é triangular | false: nao é triangular
      */
-    static boolean verificarNumTriangular (int n) {
+    public static boolean verificarNumTriangular (int n) {
         int soma = 0;
         for (int i=1; i < n; i++) {
             soma += i;
