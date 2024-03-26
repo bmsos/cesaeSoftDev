@@ -3,6 +3,41 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Utils {
+    public static String perguntaSimOuNao (String pergunta) {
+        Scanner input = new Scanner(System.in);
+
+        String resposta = "";
+        boolean respostaValida = false;
+        while (!respostaValida) {
+            System.out.print(pergunta);
+            resposta = input.nextLine();
+            respostaValida = resposta.equalsIgnoreCase("s") || resposta.equalsIgnoreCase("n");
+
+            if (!respostaValida) {
+                System.out.println("Resposta inválida.");
+            }
+        }
+
+        return resposta;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(perguntaSimOuNao("Reservar? (s/n): "));
+    }
+
+    /**
+     * Verifica se um input é int parsable
+     * @param input String
+     * @return true: parsable to int | false : not parsable to int
+     */
+    public static boolean isInt (String input) {
+        try {
+            Integer.parseInt(input);
+            return true;
+        } catch (NumberFormatException erro) {
+            return false;
+        }
+    }
     /**
      * Converte os dados de um ficheiro numa matriz (todas as linhas incluindo cabeçalho)
      * @param file
