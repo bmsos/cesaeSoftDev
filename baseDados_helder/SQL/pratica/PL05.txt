@@ -1,0 +1,51 @@
+1.
+create database Encomendas;	->
+use Encomendas;
+---------------------------------------------------------------
+2.
+create table Cliente (
+	codCliente int identity(1,1) primary key,
+	nome varchar(50) not null,
+	morada varchar(100),
+	telef int
+);
+
+create table Produto(
+	codProduto int identity(1,1) primary key,
+	nome varchar(50) not null,
+	preco decimal(12, 2),
+	obs varchar(250)
+);
+
+create table Encomenda (
+	codEncomenda int identity(1,1) primary key,
+	codCliente int not null references Cliente(codCliente),
+	data datetime not null
+);
+
+create table LinhaEncomenda(
+	codEncomenda int references Encomenda(codEncomenda),
+	codProduto int references Produto(codProduto),
+	quantidade int not null,
+	desconto int default 0,
+	constraint PK_LINHAENCOMENDA primary key (codEncomenda, codProduto)
+);
+---------------------------------------------------------------
+3.
+insert into Cliente values ('Valéria Romeu', 'Braga', 919191919), ('Carlos Rodrigues', 'Porto', 918765432), ('Bruno Oliveira', 'Lisboa', 912345678);
+insert into Produto (nome, preco) values ('Rato', 3), ('Teclado', 12), ('Monitor', 84);
+insert into Encomenda (codCliente, data) values (1, '2023/08/09'), (3, '2024-03-15'), (3, '2024-01-23');
+insert into LinhaEncomenda values (14, 1, 4, 20), (15, 2, 2, null), (16, 3, 1, null);
+---------------------------------------------------------------
+4.
+a.
+select * from Cliente where morada = 'Porto' order by nome;
+
+b.
+select * from Produto where nome = 'Teclado' order by preco;
+
+c.
+select Encomenda.data from Encomenda, Cliente where Encomenda.codCliente = Cliente.codCliente and Cliente.nome = 'Bruno Oliveira'
+
+d. VERIFICAR
+select * from Cliente, Encomenda, LinhaEncomenda, Produto where Cliente.codCliente = Encomenda.codCliente and Encomenda.codEncomenda = LinhaEncomenda.codEncomenda and Cliente.nome = 'Bruno Oliveira'

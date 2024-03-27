@@ -1,26 +1,73 @@
 1.
-
------------------------------------
+create database GestComercial; 	->
+use GestComercial;
+--------------------------------------------------------------------------
 2.
------------------------------------
+create table Cliente (
+	id int identity(1, 1) primary key,
+	nome varchar(50) not null,
+	morada varchar(250),
+	estado bit
+);
+create table Produto (
+	id int identity(1, 1) primary key,
+	descricao varchar(100) not null,
+	preco decimal(12, 2)
+);
+create table Venda (
+	prod int references Produto(id),
+	cli int references Cliente(id),
+	data datetime,
+	qtd int,
+	primary key (prod, cli, data)
+);
+--------------------------------------------------------------------------
 3.
------------------------------------
+insert into Cliente values ('Helena Monteiro', 'Perafita - Freixieiro', 1), ('Raul Simas', 'Palmela', 0);
+insert into Produto values ('Rato Logitec XPTO 1', 10), ('Monitor Sony Vaio XPTO', 120);
+insert into Venda values (1, 1, '2012-04-05', 1), (1, 2, '2012-04-05', 5);
+--------------------------------------------------------------------------
 4.
 
 a.
-update venda set qtd = 10 where prod = 1 AND cli = 2 AND data_venda = '2012-05-05';
+update Venda set qtd = 10 where prod = 1 AND cli = 2 AND data = '2012-04-05';
 
 b.
 update Cliente set morada = 'Porto' where id = 2
 
 c.
 update Produto set preco = 100 where id = 2
------------------------------------
-
+--------------------------------------------------------------------------
 5.
 
 a.
-select * from Produto
+select * from Produto;
 
 b.
-select nome from Cliente where estado = 1
+select nome from Cliente where estado = 1;
+
+c.
+select * from Venda where cli = 2;
+
+d.
+select * 
+from Venda 
+where cli IN (select id from Cliente where nome like 'H%')
+
+e.
+select count(*) from Venda where cli = 2;
+
+f.
+select top(1) * from Produto order by preco desc
+
+g.
+select * from Produto where preco <= 100;
+
+h.
+select nome from Cliente where id not in (select cli from Venda);
+
+i.
+select SUM(Produto.preco * Venda.qtd) as receitaTotal, Venda.data
+from Produto, Venda
+where Produto.id = Venda.prod
+group by Venda.data
