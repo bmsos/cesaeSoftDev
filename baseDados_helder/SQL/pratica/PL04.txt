@@ -1,0 +1,26 @@
+1.
+
+-----------------------------------
+2.
+-----------------------------------
+3.
+-----------------------------------
+4.
+
+a.
+update venda set qtd = 10 where prod = 1 AND cli = 2 AND data_venda = '2012-05-05';
+
+b.
+update Cliente set morada = 'Porto' where id = 2
+
+c.
+update Produto set preco = 100 where id = 2
+-----------------------------------
+
+5.
+
+a.
+select * from Produto
+
+b.
+select nome from Cliente where estado = 1
