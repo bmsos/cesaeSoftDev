@@ -7,7 +7,7 @@ public class DBFiles {
     public static File fileClientes = new File("database/GameStart_Clientes.csv");
     public static File fileCopyright = new File("database/GameStart_Copyright.txt");
 
-        // catalogo grafico
+    // catalogo grafico
     public static File fileCallOfDuty = new File("database/CatalogoGrafico/callOfDuty.txt");
     public static File fileFifa = new File("database/CatalogoGrafico/fifa.txt");
     public static File fileHollowKnight = new File("database/CatalogoGrafico/hollowKnight.txt");

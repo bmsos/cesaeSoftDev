@@ -49,19 +49,22 @@ public class Admin {
                             opcaoConsultarFicheiros = Utils.isInt(respostaConsultarFicheiros) ? Integer.parseInt(respostaConsultarFicheiros) : 0;
                             switch (opcaoConsultarFicheiros) {
                                 case 1 -> {
-                                    System.out.println("\nVendas:");
+                                    System.out.println("---------------------------");
+                                    System.out.println("Vendas:");
                                     Utils.imprimirMatriz(vendas);
-                                    System.out.println();
+                                    System.out.println("---------------------------");
                                 }
                                 case 2 -> {
-                                    System.out.println("\nClientes:");
+                                    System.out.println("---------------------------");
+                                    System.out.println("Clientes:");
                                     Utils.imprimirMatriz(clientes);
-                                    System.out.println();
+                                    System.out.println("---------------------------");
                                 }
                                 case 3 -> {
-                                    System.out.println("\nCategorias:");
+                                    System.out.println("---------------------------");
+                                    System.out.println("Categorias:");
                                     Utils.imprimirMatriz(categorias);
-                                    System.out.println();
+                                    System.out.println("---------------------------");
                                 }
                                 default -> System.out.println("Opção inválida");
                             }
@@ -225,15 +228,9 @@ public class Admin {
                 System.out.println("Sessão iniciada.\n");
                 return true;
             }
+            System.out.println("Login sem sucesso.");
+            tentarNovamente = Utils.perguntaSimOuNao("Tentar novamente? (s/n): ");
 
-            System.out.print("Login sem sucesso. Tentar novamente? (\"s\" - sim | \"n\" - não): ");
-            tentarNovamente = input.nextLine().toLowerCase();
-
-            // forçar resposta válida à pergunta "Tentar novamente?"
-            while (!(tentarNovamente.equals("s") || tentarNovamente.equals("n"))) {
-                System.out.print("Resposta inválida. Tentar novamente? (\"s\" - sim | \"n\" - não): ");
-                tentarNovamente = input.nextLine().toLowerCase();
-            }
         } while(tentarNovamente.equals("s"));
 
         return false;

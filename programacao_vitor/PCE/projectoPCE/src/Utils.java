@@ -3,6 +3,12 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Utils {
+    /**
+     * Fazer uma pergunta cuja resposta é sim ("s") ou nao ("n") <br>
+     * Força uma resposta válida
+     * @param pergunta String
+     * @return String resposta -> input relativo à pergunta passada como argumento
+     */
     public static String perguntaSimOuNao (String pergunta) {
         Scanner input = new Scanner(System.in);
 
